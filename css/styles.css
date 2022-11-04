@@ -55,5 +55,63 @@ p {
   font-family: Lato;
   src: url(fonts/Lato-Regular.ttf);
 }
+.navHolder {
+  height: 132px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navHolder .nav-logo {
+  margin-left: 50px;
+  width: 224px;
+  height: 55px;
+  background-image: url(../images/logo.svg);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.navHolder .links {
+  margin: auto 50px auto auto;
+}
+.navHolder .links a {
+  font-family: Caveat;
+  font-size: 25px;
+  margin-left: 20px;
+  text-decoration: none;
+  color: #000;
+}
+.navHolder .links a span {
+  height: 52px;
+  width: 158px;
+  width: 300px;
+  background-color: #ffd972;
+  border-radius: 10px;
+}
+
+.home {
+  height: 800px;
+  margin-top: -132px;
+  width: 100%;
+  background-image: linear-gradient(rgba(242, 92, 84, 0.5), rgba(242, 92, 84, 0.5)), url(../images/hero.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.home .home-banner .home-circle-one {
+  height: 358px;
+  width: 358px;
+  border-radius: 179px;
+  background-color: #ffd972;
+}
+.home .home-banner .home-circle-two {
+  height: 168px;
+  width: 168px;
+  background-color: #fcbcb8;
+  border-radius: 84px;
+}
 
 /*# sourceMappingURL=styles.css.map */

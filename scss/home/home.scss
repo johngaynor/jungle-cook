@@ -1,0 +1,29 @@
+.home {
+  height: 800px;
+  margin-top: -132px;
+  width: 100%;
+  background-image: linear-gradient(rgba($site-red, 0.5), rgba($site-red, 0.5)),
+    url(../images/hero.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .home-banner {
+    .home-circle-one {
+      height: 358px;
+      width: 358px;
+      border-radius: 179px;
+      background-color: $site-yellow;
+    }
+
+    .home-circle-two {
+      height: 168px;
+      width: 168px;
+      background-color: $site-pink;
+      border-radius: 84px;
+    }
+  }
+}

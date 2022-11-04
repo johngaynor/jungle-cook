@@ -1,0 +1,42 @@
+.navHolder {
+  height: 132px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  //   position: absolute;
+
+  .nav-logo {
+    margin-left: 50px;
+    width: 224px;
+    height: 55px;
+    background-image: url(../images/logo.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .links {
+    margin: auto 50px auto auto;
+
+    a {
+      font-family: Caveat;
+      font-size: 25px;
+      margin-left: 20px;
+      text-decoration: none;
+      color: #000;
+
+      span {
+        height: 52px;
+        width: 158px;
+        width: 300px;
+        background-color: $site-yellow;
+        border-radius: 10px;
+      }
+    }
+
+    // a:hover {
+    //   border-bottom: 3px solid black;
+    // } needs to be a line underneath when we are on that page
+  }
+}
