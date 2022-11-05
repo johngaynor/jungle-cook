@@ -1,7 +1,7 @@
 .home {
   height: 800px;
-  margin-top: -132px;
   width: 100%;
+  margin-top: -132px;
   background-image: linear-gradient(rgba($site-red, 0.5), rgba($site-red, 0.5)),
     url(../images/hero.jpg);
   background-position: center;
@@ -12,11 +12,32 @@
   justify-content: center;
 
   .home-banner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
     .home-circle-one {
       height: 358px;
       width: 358px;
       border-radius: 179px;
       background-color: $site-yellow;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      h1 {
+        font-family: Caveat-Bold;
+        font-size: 24px;
+      }
+
+      p {
+        font-family: Lato;
+        font-size: 13px;
+        width: 166px;
+      }
     }
 
     .home-circle-two {
@@ -24,6 +45,17 @@
       width: 168px;
       background-color: $site-pink;
       border-radius: 84px;
+      position: absolute;
+      margin: 0 0 320px 320px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      p {
+        font-family: Lato-Italic;
+        font-size: 10px;
+        width: 105px;
+      }
     }
   }
 }

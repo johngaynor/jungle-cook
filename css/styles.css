@@ -71,17 +71,17 @@ p {
   background-size: contain;
   background-repeat: no-repeat;
 }
-.navHolder .links {
+.navHolder .nav-links {
   margin: auto 50px auto auto;
 }
-.navHolder .links a {
+.navHolder .nav-links a {
   font-family: Caveat;
   font-size: 25px;
   margin-left: 20px;
   text-decoration: none;
   color: #000;
 }
-.navHolder .links a span {
+.navHolder .nav-links a span {
   height: 52px;
   width: 158px;
   width: 300px;
@@ -91,8 +91,8 @@ p {
 
 .home {
   height: 800px;
-  margin-top: -132px;
   width: 100%;
+  margin-top: -132px;
   background-image: linear-gradient(rgba(242, 92, 84, 0.5), rgba(242, 92, 84, 0.5)), url(../images/hero.jpg);
   background-position: center;
   background-size: cover;
@@ -101,17 +101,79 @@ p {
   align-items: center;
   justify-content: center;
 }
+.home .home-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
 .home .home-banner .home-circle-one {
   height: 358px;
   width: 358px;
   border-radius: 179px;
   background-color: #ffd972;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home .home-banner .home-circle-one h1 {
+  font-family: Caveat-Bold;
+  font-size: 24px;
+}
+.home .home-banner .home-circle-one p {
+  font-family: Lato;
+  font-size: 13px;
+  width: 166px;
 }
 .home .home-banner .home-circle-two {
   height: 168px;
   width: 168px;
   background-color: #fcbcb8;
   border-radius: 84px;
+  position: absolute;
+  margin: 0 0 320px 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home .home-banner .home-circle-two p {
+  font-family: Lato-Italic;
+  font-size: 10px;
+  width: 105px;
+}
+
+footer {
+  height: 70px;
+  margin: -70px 40px auto 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: Lato-Italic;
+  font-size: 15px;
+  color: #393939;
+}
+footer .footer-links a {
+  text-decoration: none;
+  color: #393939;
+  margin-right: 15px;
+}
+footer .footer-socials {
+  width: 78px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+footer .footer-socials .footer-socials-facebook {
+  height: 19px;
+  width: 19px;
+  background-image: url(../images/facebook.svg);
+}
+footer .footer-socials .footer-socials-instagram {
+  height: 19px;
+  width: 19px;
+  background-image: url(../images/instagram.svg);
 }
 
 /*# sourceMappingURL=styles.css.map */
