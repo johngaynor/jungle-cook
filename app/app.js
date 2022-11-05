@@ -7,7 +7,7 @@ function changeRoute() {
       $("#app").html(data);
     });
   } else {
-    $.get(`pages/home/home.html`, function (data) {
+    $.get(`pages/login/login.html`, function (data) {
       $("#app").html(data);
     });
   }
