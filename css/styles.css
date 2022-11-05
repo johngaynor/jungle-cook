@@ -93,10 +93,63 @@ p {
   background-color: #ffd972;
   border-radius: 10px;
 }
+.navHolder .nav-bars {
+  display: none;
+  flex-direction: column;
+  margin-right: 50px;
+}
+.navHolder .nav-bars .nav-bar {
+  display: block;
+  width: 25px;
+  margin: 3px 0;
+  height: 3px;
+  background-color: #000;
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+.nav-bars.active .nav-bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-bars.active .nav-bar:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.nav-bars.active .nav-bar:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
 
 @media screen and (max-width: 1330px) {
   .navHolder .nav-logo {
     margin-left: 20px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .navHolder {
+    position: fixed;
+    z-index: 10;
+  }
+  .navHolder .nav-links {
+    position: fixed;
+    width: 100vw;
+    opacity: 0;
+    right: 1000px;
+    top: 100px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease-in;
+    margin: 0 auto;
+  }
+  .navHolder .nav-links a {
+    margin: 30px auto;
+  }
+  .navHolder .nav-links.active {
+    opacity: 1;
+    right: 0;
+    left: 0;
+  }
+  .navHolder .nav-bars {
+    display: flex;
   }
 }
 .home {
@@ -152,6 +205,34 @@ p {
   width: 105px;
 }
 
+@media screen and (max-width: 768px) {
+  .home .home-banner .home-circle-two {
+    margin: 0 0 370px 190px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .home .home-banner .home-circle-one {
+    width: 260px;
+    height: 260px;
+    border-radius: 130px;
+  }
+  .home .home-banner .home-circle-one h1 {
+    font-size: 17px;
+  }
+  .home .home-banner .home-circle-one p {
+    font-size: 9px;
+    width: 114px;
+  }
+  .home .home-banner .home-circle-two {
+    width: 120px;
+    height: 120px;
+    margin: 0 0 270px 140px;
+  }
+  .home .home-banner .home-circle-two p {
+    font-size: 8px;
+    width: 82px;
+  }
+}
 .recipes {
   min-height: 1000px;
   background-image: linear-gradient(rgba(167, 232, 189, 0.5), rgba(167, 232, 189, 0.5)), url(../images/recipe-hero.jpg);
@@ -307,9 +388,11 @@ p {
   }
   .recipes .recipes-content .recipes-container .recipe-box .recipe-desc {
     width: 300px;
+    font-size: 8px;
   }
   .recipes .recipes-content .recipes-container .recipe-box .recipe-desc h1 {
     margin-top: 10px;
+    font-size: 10px;
   }
   .recipes .recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings {
     margin-bottom: 20px;

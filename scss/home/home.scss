@@ -57,3 +57,44 @@
     }
   }
 }
+
+@media screen and (max-width: 768px) {
+  .home {
+    .home-banner {
+      .home-circle-two {
+        margin: 0 0 370px 190px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .home {
+    .home-banner {
+      .home-circle-one {
+        width: 260px;
+        height: 260px;
+        border-radius: 130px;
+
+        h1 {
+          font-size: 17px;
+        }
+
+        p {
+          font-size: 9px;
+          width: 114px;
+        }
+      }
+      .home-circle-two {
+        width: 120px;
+        height: 120px;
+        margin: 0 0 270px 140px;
+
+        p {
+          font-size: 8px;
+          width: 82px;
+        }
+      }
+    }
+  }
+}
