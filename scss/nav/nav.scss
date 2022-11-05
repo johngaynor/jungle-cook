@@ -40,3 +40,11 @@
     // } needs to be a line underneath when we are on that page
   }
 }
+
+@media screen and (max-width: 1330px) {
+  .navHolder {
+    .nav-logo {
+      margin-left: 20px;
+    }
+  }
+} ;
