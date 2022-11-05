@@ -24,7 +24,7 @@
 
     .recipes-container {
       min-height: 100px;
-      background-color: red;
+      //   background-color: red;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -32,19 +32,8 @@
       .recipe-box {
         height: 263px;
         width: 524px;
-        background-color: blue;
         display: flex;
         margin-bottom: 50px;
-
-        .recipe-img {
-          height: 100%;
-          width: 300px;
-          border-radius: 24px;
-          background-image: url(../images/recipe-pizza.jpg);
-          background-position: center;
-          background-size: cover;
-          background-repeat: no-repeat;
-        }
 
         .recipe-desc {
           width: 224px;
@@ -109,6 +98,54 @@
             }
           }
         }
+      }
+    }
+
+    #recipe-pizza {
+      .recipe-img {
+        height: 100%;
+        width: 300px;
+        border-radius: 24px;
+        background-image: url(../images/recipe-pizza.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
+    #recipe-burger {
+      .recipe-img {
+        height: 100%;
+        width: 300px;
+        border-radius: 24px;
+        background-image: url(../images/recipe-burger.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
+    #recipe-chicken {
+      .recipe-img {
+        height: 100%;
+        width: 300px;
+        border-radius: 24px;
+        background-image: url(../images/recipe-pilaf.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+
+    #recipe-chowMein {
+      .recipe-img {
+        height: 100%;
+        width: 300px;
+        border-radius: 24px;
+        background-image: url(../images/recipe-chowmein.jpg);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
       }
     }
   }

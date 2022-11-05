@@ -168,7 +168,6 @@ p {
 }
 .recipes .recipes-content .recipes-container {
   min-height: 100px;
-  background-color: red;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -176,18 +175,8 @@ p {
 .recipes .recipes-content .recipes-container .recipe-box {
   height: 263px;
   width: 524px;
-  background-color: blue;
   display: flex;
   margin-bottom: 50px;
-}
-.recipes .recipes-content .recipes-container .recipe-box .recipe-img {
-  height: 100%;
-  width: 300px;
-  border-radius: 24px;
-  background-image: url(../images/recipe-pizza.jpg);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 .recipes .recipes-content .recipes-container .recipe-box .recipe-desc {
   width: 224px;
@@ -243,6 +232,42 @@ p {
 }
 .recipes .recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings p {
   margin: auto;
+}
+.recipes .recipes-content #recipe-pizza .recipe-img {
+  height: 100%;
+  width: 300px;
+  border-radius: 24px;
+  background-image: url(../images/recipe-pizza.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.recipes .recipes-content #recipe-burger .recipe-img {
+  height: 100%;
+  width: 300px;
+  border-radius: 24px;
+  background-image: url(../images/recipe-burger.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.recipes .recipes-content #recipe-chicken .recipe-img {
+  height: 100%;
+  width: 300px;
+  border-radius: 24px;
+  background-image: url(../images/recipe-pilaf.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.recipes .recipes-content #recipe-chowMein .recipe-img {
+  height: 100%;
+  width: 300px;
+  border-radius: 24px;
+  background-image: url(../images/recipe-chowmein.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 footer {
