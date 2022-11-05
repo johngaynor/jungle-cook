@@ -1,0 +1,112 @@
+.create {
+  min-height: 100vh;
+  background-color: #fff;
+  color: #000;
+
+  h1 {
+    padding-top: 150px;
+    font-family: Caveat-Bold;
+    width: 75%;
+    margin: 0 auto;
+  }
+
+  .create-container {
+    margin: 0 auto;
+    padding-bottom: 90px;
+    width: 75%;
+
+    p {
+      font-size: 20px;
+      font-family: Lato;
+      margin: 80px auto -40px auto;
+    }
+
+    div {
+      input {
+        display: block;
+        width: 100%;
+        margin-top: 80px;
+        height: 40px;
+        font-size: 20px;
+        font-family: Lato;
+        background: transparent;
+        border: 0;
+        border-bottom: solid #000 3px;
+      }
+
+      ::placeholder {
+        color: #000;
+      }
+    }
+  }
+
+  #submit {
+    width: 422px;
+    height: 52px;
+    color: #000;
+    background-color: $site-darkpink;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Caveat;
+    font-size: 25px;
+    border-radius: 26px;
+    border: none;
+    margin: 125px auto 70px auto;
+  }
+
+  //   #edit {
+  //     width: 130px;
+  //     height: 45px;
+  //     color: #000;
+  //     background-color: $site-darkpink;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     font-family: Lato;
+  //     font-size: 20px;
+  //     border-radius: 20px;
+  //     margin: 30px auto;
+  //   }
+}
+
+@media screen and (max-width: 768px) {
+  .create {
+    h1 {
+      width: 80%;
+    }
+
+    .create-container {
+      width: 80%;
+      margin-top: -20px;
+
+      div {
+        input {
+          margin-top: 60px;
+        }
+      }
+    }
+
+    #submit {
+      width: 354px;
+    }
+  }
+}
+
+@media screen and (max-width: 460px) {
+  .create {
+    .create-container {
+      margin-top: -30px;
+
+      div {
+        input {
+          margin-top: 50px;
+        }
+      }
+    }
+
+    #submit {
+      width: 283px;
+    }
+  }
+}

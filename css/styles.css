@@ -479,6 +479,82 @@ p {
     width: 207px;
   }
 }
+.create {
+  min-height: 100vh;
+  background-color: #fff;
+  color: #000;
+}
+.create h1 {
+  padding-top: 150px;
+  font-family: Caveat-Bold;
+  width: 75%;
+  margin: 0 auto;
+}
+.create .create-container {
+  margin: 0 auto;
+  padding-bottom: 90px;
+  width: 75%;
+}
+.create .create-container p {
+  font-size: 20px;
+  font-family: Lato;
+  margin: 80px auto -40px auto;
+}
+.create .create-container div input {
+  display: block;
+  width: 100%;
+  margin-top: 80px;
+  height: 40px;
+  font-size: 20px;
+  font-family: Lato;
+  background: transparent;
+  border: 0;
+  border-bottom: solid #000 3px;
+}
+.create .create-container div ::placeholder {
+  color: #000;
+}
+.create #submit {
+  width: 422px;
+  height: 52px;
+  color: #000;
+  background-color: #efa7a7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Caveat;
+  font-size: 25px;
+  border-radius: 26px;
+  border: none;
+  margin: 125px auto 70px auto;
+}
+
+@media screen and (max-width: 768px) {
+  .create h1 {
+    width: 80%;
+  }
+  .create .create-container {
+    width: 80%;
+    margin-top: -20px;
+  }
+  .create .create-container div input {
+    margin-top: 60px;
+  }
+  .create #submit {
+    width: 354px;
+  }
+}
+@media screen and (max-width: 460px) {
+  .create .create-container {
+    margin-top: -30px;
+  }
+  .create .create-container div input {
+    margin-top: 50px;
+  }
+  .create #submit {
+    width: 283px;
+  }
+}
 footer {
   height: 70px;
   margin: -70px 40px auto 40px;
