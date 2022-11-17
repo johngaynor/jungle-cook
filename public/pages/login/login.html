@@ -3,8 +3,8 @@
     <div class="login-login">
       <h1>Login Here!</h1>
       <form action="" class="login-form">
-        <input id="email" type="email" placeholder="Email Address" />
-        <input id="password" type="text" placeholder="Password" />
+        <input id="login-email" type="email" placeholder="Email Address" />
+        <input id="login-password" type="password" placeholder="Password" />
         <input id="login-submit" type="button" value="Login" />
       </form>
     </div>
@@ -14,9 +14,14 @@
       <form action="" class="signup-form">
         <input type="text" id="fname" placeholder="First Name" />
         <input type="text" id="lname" placeholder="Last Name" />
-        <input id="email" type="email" placeholder="Email Address" />
-        <input id="password" type="text" placeholder="Password" />
-        <input id="signup-submit" type="button" value="Sign Up" />
+        <input id="signup-email" type="email" placeholder="Email Address" />
+        <input id="signup-password" type="password" placeholder="Password" />
+        <input
+          id="signup-submit"
+          type="button"
+          value="Sign Up"
+          onclick="createAccount()"
+        />
       </form>
     </div>
   </div>
