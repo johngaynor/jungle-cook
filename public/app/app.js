@@ -1,3 +1,6 @@
+var userExists = false;
+var userFullName = "";
+
 function changeRoute() {
   let hashTag = window.location.hash;
   let pageID = hashTag.replace("#", "");
@@ -7,7 +10,7 @@ function changeRoute() {
       $("#app").html(data);
     });
   } else {
-    $.get(`pages/login/login.html`, function (data) {
+    $.get(`pages/home/home.html`, function (data) {
       $("#app").html(data);
     });
   }
@@ -16,6 +19,7 @@ function changeRoute() {
 function initURLListener() {
   $(window).on("hashchange", changeRoute);
   changeRoute();
+  $("#navSignOut").hide();
 }
 
 function navListeners() {
@@ -34,8 +38,14 @@ function intiFirebase() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       console.log("app.js > line 36 > auth change logged in");
+      // if (user.displayName) {
+      //   $(".create-header-name").html(displayName);
+      // }
+      userExists = false;
     } else {
       console.log("app.js > line 38 > auth change logged out");
+      userExists = true;
+      userFullName = "";
     }
   });
 }
@@ -55,13 +65,56 @@ function createAccount() {
       // Signed in
       var user = userCredential.user;
       console.log("created account");
-      // ...
+      firebase.auth().currentUser.updateProfile({
+        displayName: fullName,
+      });
+      $("#fname").val("");
+      $("#lname").val("");
+      $("#signup-email").val("");
+      $("#signup-password").val("");
+      $("#navLogin").hide();
+      $("#navSignOut").show();
+      $(".nav-links").append(`<a id="#nav-fName" href="">${fName}</a>`);
+      // $("#nav-fName").html(fName);
+      // $.get(`pages/your-recipes/your-recipes.html`, function (data) {
+      //   $("#app").html(data);
+      // });
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
       console.log("create error " + errorMessage);
       // ..
+    });
+}
+
+function logIn() {
+  let email = $("#login-email").val();
+  let password = $("#login-password").val();
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in
+      var user = userCredential.user;
+      console.log("logged in");
+      $("#login-email").val("");
+      $("#login-password").val("");
+      $("#navLogin").hide();
+      $("#navSignOut").show();
+      $(".nav-links").append(`<a id="nav-fName" href="">${email}</a>`);
+
+      // $.get(`pages/your-recipes/your-recipes.html`, function (data) {
+      //   $("#app").html(data);
+      // });
+
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log("logged in error " + errorMessage);
     });
 }
 
@@ -89,6 +142,7 @@ function signOut() {
       console.log("signed out");
       $("#navSignOut").hide();
       $("#navLogin").show();
+      $("#nav-fName").remove();
     })
     .catch((error) => {
       console.log("Error signing out " + error);

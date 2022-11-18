@@ -5,7 +5,12 @@
       <form action="" class="login-form">
         <input id="login-email" type="email" placeholder="Email Address" />
         <input id="login-password" type="password" placeholder="Password" />
-        <input id="login-submit" type="button" value="Login" />
+        <input
+          id="login-submit"
+          type="button"
+          value="Login"
+          onclick="logIn()"
+        />
       </form>
     </div>
     <div class="login-signup">
@@ -23,6 +28,7 @@
           onclick="createAccount()"
         />
       </form>
+      <h1 id="userTest"></h1>
     </div>
   </div>
 </div>
