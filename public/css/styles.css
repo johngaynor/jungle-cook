@@ -79,14 +79,16 @@ p {
 .navHolder .nav-links {
   margin: auto 50px auto auto;
 }
-.navHolder .nav-links a {
+.navHolder .nav-links a,
+.navHolder .nav-links div {
   font-family: Caveat;
   font-size: 25px;
   margin-left: 20px;
   text-decoration: none;
   color: #000;
 }
-.navHolder .nav-links a span {
+.navHolder .nav-links a span,
+.navHolder .nav-links div span {
   height: 52px;
   width: 158px;
   width: 300px;

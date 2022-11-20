@@ -1,14 +1,16 @@
 var userExists = false;
-var userFullName = "";
+var userDisplayName = "";
 
 function changeRoute() {
   let hashTag = window.location.hash;
   let pageID = hashTag.replace("#", "");
+  // let userDisplayName = displayName;
 
   if (pageID != "") {
     $.get(`pages/${pageID}/${pageID}.html`, function (data) {
       $("#app").html(data);
     });
+    // $("#header-fName").html(`<p>${userDisplayName}<p>`);
   } else {
     $.get(`pages/home/home.html`, function (data) {
       $("#app").html(data);
@@ -41,11 +43,14 @@ function intiFirebase() {
       // if (user.displayName) {
       //   $(".create-header-name").html(displayName);
       // }
-      userExists = false;
+      userExists = true;
+      if (user.displayName) {
+        $(".nav-links").append(`<div id="nav-fName">${user.displayName}</div>`);
+      }
     } else {
       console.log("app.js > line 38 > auth change logged out");
-      userExists = true;
-      userFullName = "";
+      userExists = false;
+      displayName = "";
     }
   });
 }
@@ -66,15 +71,16 @@ function createAccount() {
       var user = userCredential.user;
       console.log("created account");
       firebase.auth().currentUser.updateProfile({
-        displayName: fullName,
+        displayName: fName,
       });
+      userDisplayName = fName;
       $("#fname").val("");
       $("#lname").val("");
       $("#signup-email").val("");
       $("#signup-password").val("");
       $("#navLogin").hide();
       $("#navSignOut").show();
-      $(".nav-links").append(`<a id="#nav-fName" href="">${fName}</a>`);
+      $(".nav-links").append(`<div id="nav-fName">${userDisplayName}</div>`);
       // $("#nav-fName").html(fName);
       // $.get(`pages/your-recipes/your-recipes.html`, function (data) {
       //   $("#app").html(data);
@@ -103,12 +109,8 @@ function logIn() {
       $("#login-password").val("");
       $("#navLogin").hide();
       $("#navSignOut").show();
-      $(".nav-links").append(`<a id="nav-fName" href="">${email}</a>`);
 
-      // $.get(`pages/your-recipes/your-recipes.html`, function (data) {
-      //   $("#app").html(data);
-      // });
-
+      location.href = "#create";
       // ...
     })
     .catch((error) => {
