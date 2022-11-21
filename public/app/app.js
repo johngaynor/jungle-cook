@@ -46,6 +46,7 @@ function intiFirebase() {
       userExists = true;
       if (user.displayName) {
         $(".nav-links").append(`<div id="nav-fName">${user.displayName}</div>`);
+        $("#header-fName").html("new");
       }
     } else {
       console.log("app.js > line 38 > auth change logged out");
@@ -105,12 +106,14 @@ function logIn() {
       // Signed in
       var user = userCredential.user;
       console.log("logged in");
-      $("#login-email").val("");
-      $("#login-password").val("");
+      // $("#login-email").val("");
+      // $("#login-password").val("");
       $("#navLogin").hide();
       $("#navSignOut").show();
-
+      // $("#header-fName").remove();
       location.href = "#create";
+      // $(".create").html(`hey ${user.displayName}, do stuff`);
+
       // ...
     })
     .catch((error) => {
