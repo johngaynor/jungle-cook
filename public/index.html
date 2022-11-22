@@ -12,10 +12,10 @@
       <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#browse">Browse</a>
-        <a href="#create">Create Recipe</a>
-        <a href="#your-recipes">Your Recipes</a>
+        <a id="navCreate" href="#create">Create Recipe</a>
+        <a id="navYourRecipes" href="#your-recipes">Your Recipes</a>
         <a id="navLogin" href="#login"><span>Login</span> </a>
-        <a id="navSignOut" href="#" onclick="signOut()"
+        <a id="navSignOut" onclick="signOut()" href="#"
           ><span>Sign Out</span>
         </a>
 
@@ -33,6 +33,15 @@
       <!-- content starts -->
 
       <!-- content ends -->
+    </div>
+    <div class="addList">
+      <input type="text" id="listName" placeholder="New list:" />
+      <input
+        type="submit"
+        name="submit"
+        onclick="addMainList()"
+        value="Add List"
+      />
     </div>
     <footer>
       <div class="footer-copyright">Copyright © 2019 The Jungle Cook</div>
