@@ -127,7 +127,6 @@ p {
 }
 @media screen and (max-width: 768px) {
   .navHolder {
-    position: fixed;
     z-index: 10;
   }
   .navHolder .nav-links {
@@ -401,11 +400,11 @@ p {
   }
 }
 .recipe-full {
-  background-color: red;
   min-height: 1000px;
-  margin-top: 150px;
-  margin: 150px 134px 93px 134px;
+  width: 80%;
+  margin: 150px auto 93px auto;
   font-family: Caveat;
+  position: relative;
 }
 .recipe-full h2 {
   font-size: 25px;
@@ -419,22 +418,27 @@ p {
   font-size: 20px;
 }
 .recipe-full .recipe-full-content {
-  background-color: green;
+  display: flex;
+  flex-direction: column;
+  background-color: beige;
 }
 .recipe-full .recipe-full-content .recipe-full-basic {
-  background-color: beige;
   display: flex;
 }
-.recipe-full .recipe-full-content .recipe-full-basic .recipe-full-img {
-  min-width: 468px;
-  min-height: 421px;
-  background-image: url(../images/recipe-pizza.jpg);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.recipe-full .recipe-full-content .recipe-full-basic .recipe-full-img .recipe-sideways-heading {
+  width: 421px;
+  height: 30px;
+  transform: rotate(270deg);
+  position: absolute;
+  margin-left: -520px;
+  text-align: center;
+  background-color: blue;
+}
+.recipe-full .recipe-full-content .recipe-full-basic .recipe-full-img img {
+  width: 468px;
+  height: 421px;
 }
 .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-desc {
-  background-color: purple;
   margin-left: 45px;
   display: flex;
   flex-direction: column;
@@ -450,7 +454,6 @@ p {
   list-style: none;
   font-size: 20px;
   font-family: Caveat;
-  background-color: aqua;
 }
 .recipe-full .recipe-full-content .recipe-full-ingredients h2 {
   margin: 66px auto 35px 0;
@@ -459,7 +462,6 @@ p {
   list-style: decimal;
   font-size: 20px;
   font-family: Caveat;
-  background-color: aqua;
 }
 .recipe-full .recipe-full-content .recipe-full-inst h2 {
   margin: 66px auto 35px 0;
@@ -483,6 +485,52 @@ p {
   margin-right: 20px;
 }
 
+@media screen and (max-width: 970px) {
+  .recipe-full .recipe-full-content {
+    align-items: center;
+    background-color: grey;
+  }
+  .recipe-full .recipe-full-content .recipe-full-basic {
+    flex-direction: column;
+    background-color: red;
+  }
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-img .recipe-sideways-heading {
+    background-color: red;
+  }
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-desc {
+    margin-top: 36px;
+    width: 420px;
+    background-color: violet;
+  }
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-desc h2,
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-desc h3,
+  .recipe-full .recipe-full-content .recipe-full-basic .recipe-full-desc p {
+    margin: 30px 0 0 -45px;
+  }
+  .recipe-full .recipe-full-content .recipe-full-ingredients,
+  .recipe-full .recipe-full-content .recipe-full-inst {
+    background-color: green;
+    width: 465px;
+  }
+}
+@media screen and (max-width: 700px) {
+  img {
+    height: 80%;
+  }
+}
+@media screen and (max-width: 635px) {
+  .recipe-full h2 {
+    font-size: 20px;
+  }
+  .recipe-full h3 {
+    font-size: 15px;
+  }
+}
 .login {
   min-height: 800px;
   background-color: #ffd972;
