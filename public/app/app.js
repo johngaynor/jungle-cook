@@ -12,9 +12,8 @@ function changeRoute() {
     $.get(`pages/${pageID}/${pageID}.html`, function (data) {
       $("#app").html(data);
     });
-    // $("#header-fName").html(`<p>${userDisplayName}<p>`);
   } else {
-    $.get(`pages/home/home.html`, function (data) {
+    $.get(`pages/browse/browse-full.html`, function (data) {
       $("#app").html(data);
     });
   }

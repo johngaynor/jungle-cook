@@ -1,0 +1,98 @@
+.recipe-full {
+  background-color: red;
+  min-height: 1000px;
+  margin-top: 150px;
+  margin: 150px 134px 93px 134px;
+  font-family: Caveat;
+
+  h2 {
+    font-size: 25px;
+    font-family: Lato;
+  }
+
+  h3 {
+    font-family: Lato;
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 20px;
+  }
+
+  .recipe-full-content {
+    background-color: green;
+
+    .recipe-full-basic {
+      background-color: beige;
+      display: flex;
+      //   justify-content: space-between;
+
+      .recipe-full-img {
+        min-width: 468px;
+        min-height: 421px;
+        background-image: url(../images/recipe-pizza.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      .recipe-full-desc {
+        background-color: purple;
+        margin-left: 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+
+        h2 {
+          margin-bottom: -10px;
+        }
+
+        h3 {
+          margin-bottom: -10px;
+        }
+      }
+    }
+
+    .recipe-full-ingredients {
+      list-style: none;
+      font-size: 20px;
+      font-family: Caveat;
+      background-color: aqua;
+
+      h2 {
+        margin: 66px auto 35px 0;
+      }
+    }
+
+    .recipe-full-inst {
+      list-style: decimal;
+      font-size: 20px;
+      font-family: Caveat;
+      background-color: aqua;
+
+      h2 {
+        margin: 66px auto 35px 0;
+      }
+    }
+
+    .recipe-full-btns {
+      margin-top: 60px;
+      display: flex;
+
+      #recipe-full-edit,
+      #recipe-full-back {
+        height: 42px;
+        width: 128px;
+        cursor: pointer;
+        background-color: $site-yellow;
+        border-radius: 26px;
+        font-family: Caveat;
+        font-size: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 20px;
+      }
+    }
+  }
+}
