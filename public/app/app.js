@@ -1,7 +1,195 @@
+var RECIPES = [
+  {
+    recipeName: "Supreme Pizza",
+    recipeDesc:
+      "Make pizza night super duper out of this world with homemade pizza. This recipe is supreme with vegetables and two types of meat. Yum!",
+    recipeTime: "1hr 24min",
+    recipeServings: "4 servings",
+    recipeImage: "recipe-pizza.jpg",
+    recipeIngOne: "1/4 batch pizza dough",
+    recipeIngTwo: "2 tablespoons Last-Minute Pizza Sauce",
+    recipeIngThree: "10 slices pepperoni",
+    recipeIngFour: "1 cup cooked and crumbled Italian sausage",
+    recipeIngFive: "2 large mushrooms, sliced",
+    recipeIngSix: "1/4 bell pepper, sliced",
+    recipeIngSeven: "1 tablespoon sliced black olives",
+    recipeIngEight: "1 cup shredded mozzarella cheese",
+    recipeInstOne:
+      "Preheat the oven to 475°. Spray pizza pan with nonstick cooking or line a baking sheet with parchment paper.",
+    recipeInstTwo:
+      "Flatten dough into a thin round and place on the pizza pan.",
+    recipeInstThree: "Spread pizza sauce over the dough.",
+    recipeInstFour: "Layer the toppings over the dough in the order listed.",
+    recipeInstFive:
+      "Bake for 8 to 10 minutes or until the crust is crisp and the cheese melted and lightly browned.",
+  },
+  {
+    recipeName: "Classic Burger",
+    recipeDesc:
+      "Sink your teeth into a delicious restaurant-style, hamburger recipe made from lean beef. Skip the prepackaged patties and take the extra time to craft up your own, and that little extra effort will be worth it.",
+    recipeTime: "30 min",
+    recipeServings: "4 servings",
+    recipeImage: "recipe-burger.jpg",
+    recipeIngOne: "no ingredients!",
+    recipeIngTwo: "",
+    recipeIngThree: "",
+    recipeIngFour: "",
+    recipeIngFive: "",
+    recipeIngSix: "",
+    recipeIngSeven: "",
+    recipeIngEight: "",
+    recipeInstOne: "no instructions!",
+    recipeInstTwo: "",
+    recipeInstThree: "",
+    recipeInstFour: "",
+    recipeInstFive: "",
+  },
+  {
+    recipeName: "Chicken Biryani",
+    recipeDesc:
+      " Chicken Biryani is a bold and flavorful Indian dish with crazy tender bites of chicken with bell peppers in a deliciously spiced and fragrant rice.",
+    recipeTime: "1hr 15min",
+    recipeServings: "6 servings",
+    recipeImage: "recipe-pilaf.jpg",
+    recipeIngOne: "no ingredients!",
+    recipeIngTwo: "",
+    recipeIngThree: "",
+    recipeIngFour: "",
+    recipeIngFive: "",
+    recipeIngSix: "",
+    recipeIngSeven: "",
+    recipeIngEight: "",
+    recipeInstOne: "no instructions!",
+    recipeInstTwo: "",
+    recipeInstThree: "",
+    recipeInstFour: "",
+    recipeInstFive: "",
+  },
+  {
+    recipeName: "Ch. Chow Mein",
+    recipeDesc:
+      "  A great Chow Mein comes down to the sauce - it takes more than just soy sauce and sugar! Jam packed with a surprising amount of hidden vegetables, customize this Chicken Chow Mein recipe using your protein of choice!",
+    recipeTime: "20 min",
+    recipeServings: "4 servings",
+    recipeImage: "recipe-chowmein.jpg",
+    recipeIngOne: "no ingredients!",
+    recipeIngTwo: "",
+    recipeIngThree: "",
+    recipeIngFour: "",
+    recipeIngFive: "",
+    recipeIngSix: "",
+    recipeIngSeven: "",
+    recipeIngEight: "",
+    recipeInstOne: "no instructions!",
+    recipeInstTwo: "",
+    recipeInstThree: "",
+    recipeInstFour: "",
+    recipeInstFive: "",
+  },
+];
+
 var _db = "";
 var userExists = false;
 var userDisplayName = "";
 var _userProfileInfo = "";
+
+function loadDefaultRecipes() {
+  $.each(RECIPES, function (index, recipe) {
+    $(".recipes-container").append(`<div class="recipe-box" id="${index}">
+    <div class="recipe-img">
+    <img src="images/${recipe.recipeImage}" alt="" />
+    </div>
+    <div class="recipe-desc">
+      <h1>${recipe.recipeName}</h1>
+      <p>
+      ${recipe.recipeDesc}
+      </p>
+      <div class="recipe-time">
+        <div class="recipe-time-img"></div>
+        <p>${recipe.recipeTime}</p>
+      </div>
+      <div class="recipe-servings">
+        <div class="recipe-servings-img"></div>
+        <p>${recipe.recipeServings}</p>
+      </div>
+    </div>
+  </div>`);
+
+    loadFullRecipe();
+  });
+}
+
+function initDefaultRecipeStyling() {
+  $("#app").html(`<div class="recipes">
+  <div class="recipes-content">
+    <h1>Recipes: Try some today!</h1>
+    <div class="recipes-container">
+
+    </div>
+  </div>
+</div>`);
+}
+
+function returnToRecipes() {
+  $("#recipe-full-back").click(function () {
+    initDefaultRecipeStyling();
+    loadDefaultRecipes();
+  });
+}
+
+function loadFullRecipe() {
+  $(".recipe-box").click(function (e) {
+    let recipeIndex = e.currentTarget.id;
+    console.log("clicked " + recipeIndex);
+    $("#app").html(`<div class="recipe-full">
+    <div class="recipe-full-content">
+      <div class="recipe-full-basic">
+        <div class="recipe-full-img">
+          <h2 class="recipe-sideways-heading">${RECIPES[recipeIndex].recipeName}</h2>
+          <img src="images/${RECIPES[recipeIndex].recipeImage}" alt="" />
+        </div>
+        <div class="recipe-full-desc">
+          <h2>Description:</h2>
+          <p>
+          ${RECIPES[recipeIndex].recipeDesc}
+          </p>
+          <h3>Total Time:</h3>
+          <p>${RECIPES[recipeIndex].recipeTime}</p>
+          <h3>Servings:</h3>
+          <p>${RECIPES[recipeIndex].recipeServings}</p>
+        </div>
+      </div>
+      <div class="recipe-full-ingredients">
+        <h2>Ingredients:</h2>
+        <li>${RECIPES[recipeIndex].recipeIngOne}</li>
+        <li>${RECIPES[recipeIndex].recipeIngTwo}</li>
+        <li>${RECIPES[recipeIndex].recipeIngThree}</li>
+        <li>${RECIPES[recipeIndex].recipeIngFour}</li>
+        <li>${RECIPES[recipeIndex].recipeIngFive}</li>
+        <li>${RECIPES[recipeIndex].recipeIngSix}</li>
+        <li>${RECIPES[recipeIndex].recipeIngSeven}</li>
+        <li>${RECIPES[recipeIndex].recipeIngEight}</li>
+      </div>
+      <div class="recipe-full-inst">
+        <h2>Instructions:</h2>
+        <li>${RECIPES[recipeIndex].recipeInstOne}</li>
+        <li>${RECIPES[recipeIndex].recipeInstTwo}</li>
+        <li>${RECIPES[recipeIndex].recipeInstThree}</li>
+        <li>${RECIPES[recipeIndex].recipeInstFour}</li>
+        <li>${RECIPES[recipeIndex].recipeInstFive}</li>
+      </div>
+      <div class="recipe-full-btns">
+        <div id="recipe-full-back">Go Back</div>
+      </div>
+    </div>
+  </div>
+  `);
+
+    returnToRecipes();
+  });
+}
+
+// how to get it to refresh the scroll position when reloading the content?
 
 function changeRoute() {
   let hashTag = window.location.hash;
@@ -11,10 +199,14 @@ function changeRoute() {
   if (pageID != "") {
     $.get(`pages/${pageID}/${pageID}.html`, function (data) {
       $("#app").html(data);
+
+      loadDefaultRecipes();
     });
   } else {
-    $.get(`pages/browse/browse-full.html`, function (data) {
+    $.get(`pages/browse/browse.html`, function (data) {
       $("#app").html(data);
+
+      loadDefaultRecipes();
     });
   }
 }
@@ -257,10 +449,25 @@ $(document).ready(function () {
   navListeners();
 });
 
-// function userUpdateContent() {
-//   $(document)
-//     .then(function () {
-//       $("#header-fName").html();
-//     })
-//     .catch(console.log("loading error"));
-// }
+// default recipe info
+// {
+//   recipeName: "",
+//   recipeDesc:
+//     "",
+//   recipeTime: "",
+//   recipeServings: "",
+//   recipeImage: "",
+//   recipeIngOne: "",
+//   recipeIngTwo: "",
+//   recipeIngThree: "",
+//   recipeIngFour: "",
+//   recipeIngFive: "",
+//   recipeIngSix: "",
+//   recipeIngSeven: "",
+//   recipeIngEight: "",
+//   recipeInstOne: "",
+//   recipeInstTwo: "",
+//   recipeInstThree: "",
+//   recipeInstFour: "",
+//   recipeInstFive: "",
+// },

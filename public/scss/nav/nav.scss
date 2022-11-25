@@ -78,11 +78,11 @@
 
 @media screen and (max-width: 768px) {
   .navHolder {
-    // position: fixed;
+    position: relative;
     z-index: 10;
 
     .nav-links {
-      position: fixed;
+      position: absolute;
       width: 100vw;
       opacity: 0;
       right: 1000px;

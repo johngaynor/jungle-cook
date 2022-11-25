@@ -33,6 +33,15 @@
         display: flex;
         margin-top: 50px;
 
+        .recipe-img {
+          img {
+            height: 263px;
+            width: 300px;
+            border-radius: 24px;
+            object-fit: cover;
+          }
+        }
+
         .recipe-desc {
           width: 224px;
           border-radius: 24px;
@@ -99,53 +108,53 @@
       }
     }
 
-    #recipe-pizza {
-      .recipe-img {
-        height: 100%;
-        width: 300px;
-        border-radius: 24px;
-        background-image: url(../images/recipe-pizza.jpg);
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
+    // #recipe-pizza {
+    //   .recipe-img {
+    //     height: 100%;
+    //     width: 300px;
+    //     border-radius: 24px;
+    //     background-image: url(../images/recipe-pizza.jpg);
+    //     background-position: center;
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    //   }
+    // }
 
-    #recipe-burger {
-      .recipe-img {
-        height: 100%;
-        width: 300px;
-        border-radius: 24px;
-        background-image: url(../images/recipe-burger.jpg);
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
+    // #recipe-burger {
+    //   .recipe-img {
+    //     height: 100%;
+    //     width: 300px;
+    //     border-radius: 24px;
+    //     background-image: url(../images/recipe-burger.jpg);
+    //     background-position: center;
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    //   }
+    // }
 
-    #recipe-chicken {
-      .recipe-img {
-        height: 100%;
-        width: 300px;
-        border-radius: 24px;
-        background-image: url(../images/recipe-pilaf.jpg);
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
+    // #recipe-chicken {
+    //   .recipe-img {
+    //     height: 100%;
+    //     width: 300px;
+    //     border-radius: 24px;
+    //     background-image: url(../images/recipe-pilaf.jpg);
+    //     background-position: center;
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    //   }
+    // }
 
-    #recipe-chowMein {
-      .recipe-img {
-        height: 100%;
-        width: 300px;
-        border-radius: 24px;
-        background-image: url(../images/recipe-chowmein.jpg);
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-      }
-    }
+    // #recipe-chowMein {
+    //   .recipe-img {
+    //     height: 100%;
+    //     width: 300px;
+    //     border-radius: 24px;
+    //     background-image: url(../images/recipe-chowmein.jpg);
+    //     background-position: center;
+    //     background-size: cover;
+    //     background-repeat: no-repeat;
+    //   }
+    // }
   }
 }
 
@@ -180,8 +189,10 @@
           margin-bottom: 50px;
           align-items: center;
           .recipe-img {
-            width: 300px;
-            min-height: 150px;
+            img {
+              width: 300px;
+              height: 150px;
+            }
           }
 
           .recipe-desc {
