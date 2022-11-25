@@ -21,17 +21,58 @@
       display: block;
     }
 
-    .recipes-container {
+    .your-recipes-container {
       min-height: 100px;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
 
       .recipe-box {
+        // @include defaultRecipeBox();
+        // start manual code
         height: 263px;
         width: 524px;
         display: flex;
         margin-top: 50px;
+
+        .recipe-img {
+          img {
+            height: 263px;
+            width: 300px;
+            border-radius: 24px;
+            object-fit: cover;
+          }
+
+          .recipe-buttons {
+            background-color: red;
+
+            .recipe-btn {
+              // @include defaultSmallBtn(none);
+              @include defaultSmallBtn();
+              display: none;
+            }
+
+            #recipe-btn-view {
+              margin: 110px 86px;
+            }
+
+            #recipe-btn-edit {
+              margin: 278px 10px 0 15px;
+            }
+
+            #recipe-btn-delete {
+              margin: 278px 15px 0 158px;
+            }
+          }
+        }
+
+        .recipe-img:hover .recipe-btn {
+          display: flex;
+        }
+
+        // for some reason I can't get it to show on recipe-box, just on recipe-img. tried doing the same with recipe-desc and it didn't work there either.
+
+        // these buttons are similar to ther buttons on this site
 
         .recipe-desc {
           width: 224px;
@@ -96,47 +137,36 @@
             }
           }
         }
-      }
-    }
-
-    #recipe-pizza {
-      .recipe-img {
-        height: 100%;
-        width: 300px;
-        border-radius: 24px;
-        background-image: url(../images/recipe-pizza.jpg);
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
+        // end manual code
       }
     }
   }
 }
 
 @media screen and (max-width: 1330px) {
-  .recipes {
-    .recipes-content {
+  .your-recipes {
+    .your-recipes-content {
       margin: 0 50px;
     }
   }
 }
 
 @media screen and (max-width: 1220px) {
-  .recipes-container {
+  .your-recipes-container {
     flex-direction: column;
     align-items: center;
   }
 }
 
 @media screen and (max-width: 640px) {
-  .recipes {
-    .recipes-content {
+  .your-recipes {
+    .your-recipes-content {
       display: flex;
       flex-direction: column;
       align-items: center;
       padding-top: 140px;
 
-      .recipes-container {
+      .your-recipes-container {
         margin-top: -30px;
         .recipe-box {
           flex-direction: column;
@@ -144,8 +174,10 @@
           margin-bottom: 50px;
           align-items: center;
           .recipe-img {
-            width: 300px;
-            min-height: 150px;
+            img {
+              width: 300px;
+              height: 150px;
+            }
           }
 
           .recipe-desc {
@@ -165,4 +197,4 @@
       }
     }
   }
-} ;
+}

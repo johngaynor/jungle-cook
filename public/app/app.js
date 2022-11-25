@@ -203,7 +203,7 @@ function changeRoute() {
       loadDefaultRecipes();
     });
   } else {
-    $.get(`pages/browse/browse.html`, function (data) {
+    $.get(`pages/your-recipes/your-recipes.html`, function (data) {
       $("#app").html(data);
 
       loadDefaultRecipes();

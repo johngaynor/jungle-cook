@@ -1,0 +1,93 @@
+@mixin defaultRecipeBox() {
+  height: 263px;
+  width: 524px;
+  display: flex;
+  margin-top: 50px;
+
+  .recipe-img {
+    img {
+      height: 263px;
+      width: 300px;
+      border-radius: 24px;
+      object-fit: cover;
+    }
+  }
+
+  .recipe-desc {
+    width: 224px;
+    border-radius: 24px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    font-family: Lato;
+    align-items: center;
+
+    h1 {
+      font-size: 15px;
+      margin: 46px auto 20px auto;
+      width: 140px;
+      text-decoration: underline 2px solid #000;
+      text-align: center;
+    }
+
+    p {
+      font-size: 9px;
+      width: 140px;
+    }
+
+    .recipe-time {
+      text-align: center;
+      height: 30px;
+      width: 84px;
+      display: flex;
+      margin-bottom: 17px;
+
+      .recipe-time-img {
+        width: 25px;
+        height: 25px;
+        background-image: url(../images/time.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      p {
+        margin: auto;
+      }
+    }
+
+    .recipe-servings {
+      text-align: center;
+      height: 25px;
+      width: 84px;
+      display: flex;
+
+      .recipe-servings-img {
+        width: 25px;
+        height: 25px;
+        background-image: url(../images/servings.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+
+      p {
+        margin: auto;
+      }
+    }
+  }
+}
+
+@mixin defaultSmallBtn() {
+  height: 42px;
+  width: 128px;
+  border-radius: 26px;
+  font-family: Caveat;
+  font-size: 20px;
+  background-color: $site-yellow;
+  //   display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+}

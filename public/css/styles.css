@@ -607,28 +607,33 @@ p {
     width: 207px;
   }
 }
-.create {
+.create,
+.edit {
   min-height: 100vh;
   background-color: #fff;
   color: #000;
 }
-.create h1 {
+.create h1,
+.edit h1 {
   padding-top: 150px;
   font-family: Caveat-Bold;
   width: 75%;
   margin: 0 auto;
 }
-.create .create-container {
+.create .create-container,
+.edit .create-container {
   margin: 0 auto;
   padding-bottom: 90px;
   width: 75%;
 }
-.create .create-container p {
+.create .create-container p,
+.edit .create-container p {
   font-size: 20px;
   font-family: Lato;
   margin: 80px auto -40px auto;
 }
-.create .create-container div input {
+.create .create-container div input,
+.edit .create-container div input {
   display: block;
   width: 100%;
   margin-top: 80px;
@@ -639,10 +644,14 @@ p {
   border: 0;
   border-bottom: solid #000 3px;
 }
-.create .create-container div ::placeholder {
+.create .create-container div ::placeholder,
+.edit .create-container div ::placeholder {
   color: #000;
 }
-.create #submit {
+.create #create-submit,
+.create #edit-submit,
+.edit #create-submit,
+.edit #edit-submit {
   width: 422px;
   height: 52px;
   color: #000;
@@ -658,28 +667,39 @@ p {
 }
 
 @media screen and (max-width: 768px) {
-  .create h1 {
+  .create h1,
+  .edit h1 {
     width: 80%;
   }
-  .create .create-container {
+  .create .create-container,
+  .edit .create-container {
     width: 80%;
     margin-top: -20px;
   }
-  .create .create-container div input {
+  .create .create-container div input,
+  .edit .create-container div input {
     margin-top: 60px;
   }
-  .create #submit {
+  .create #create-submit,
+  .create #edit-submit,
+  .edit #create-submit,
+  .edit #edit-submit {
     width: 354px;
   }
 }
 @media screen and (max-width: 460px) {
-  .create .create-container {
+  .create .create-container,
+  .edit .create-container {
     margin-top: -30px;
   }
-  .create .create-container div input {
+  .create .create-container div input,
+  .edit .create-container div input {
     margin-top: 50px;
   }
-  .create #submit {
+  .create #create-submit,
+  .create #edit-submit,
+  .edit #create-submit,
+  .edit #edit-submit {
     width: 283px;
   }
 }
@@ -701,19 +721,53 @@ p {
   font-size: 25px;
   display: block;
 }
-.your-recipes .your-recipes-content .recipes-container {
+.your-recipes .your-recipes-content .your-recipes-container {
   min-height: 100px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box {
   height: 263px;
   width: 524px;
   display: flex;
   margin-top: 50px;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img img {
+  height: 263px;
+  width: 300px;
+  border-radius: 24px;
+  object-fit: cover;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons {
+  background-color: red;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn {
+  height: 42px;
+  width: 128px;
+  border-radius: 26px;
+  font-family: Caveat;
+  font-size: 20px;
+  background-color: #ffd972;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+  display: none;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view {
+  margin: 110px 86px;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit {
+  margin: 278px 10px 0 15px;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete {
+  margin: 278px 15px 0 158px;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img:hover .recipe-btn {
+  display: flex;
+}
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc {
   width: 224px;
   border-radius: 24px;
   background-color: #fff;
@@ -722,25 +776,25 @@ p {
   font-family: Lato;
   align-items: center;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc h1 {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc h1 {
   font-size: 15px;
   margin: 46px auto 20px auto;
   width: 140px;
   text-decoration: underline 2px solid #000;
   text-align: center;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc p {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc p {
   font-size: 9px;
   width: 140px;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-time {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-time {
   text-align: center;
   height: 30px;
   width: 84px;
   display: flex;
   margin-bottom: 17px;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-time .recipe-time-img {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-time .recipe-time-img {
   width: 25px;
   height: 25px;
   background-image: url(../images/time.svg);
@@ -748,16 +802,16 @@ p {
   background-position: center;
   background-size: cover;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-time p {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-time p {
   margin: auto;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-servings {
   text-align: center;
   height: 25px;
   width: 84px;
   display: flex;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings .recipe-servings-img {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-servings .recipe-servings-img {
   width: 25px;
   height: 25px;
   background-image: url(../images/servings.svg);
@@ -765,59 +819,50 @@ p {
   background-position: center;
   background-size: cover;
 }
-.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings p {
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-servings p {
   margin: auto;
-}
-.your-recipes .your-recipes-content #recipe-pizza .recipe-img {
-  height: 100%;
-  width: 300px;
-  border-radius: 24px;
-  background-image: url(../images/recipe-pizza.jpg);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
 }
 
 @media screen and (max-width: 1330px) {
-  .recipes .recipes-content {
+  .your-recipes .your-recipes-content {
     margin: 0 50px;
   }
 }
 @media screen and (max-width: 1220px) {
-  .recipes-container {
+  .your-recipes-container {
     flex-direction: column;
     align-items: center;
   }
 }
 @media screen and (max-width: 640px) {
-  .recipes .recipes-content {
+  .your-recipes .your-recipes-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-top: 140px;
   }
-  .recipes .recipes-content .recipes-container {
+  .your-recipes .your-recipes-content .your-recipes-container {
     margin-top: -30px;
   }
-  .recipes .recipes-content .recipes-container .recipe-box {
+  .your-recipes .your-recipes-content .your-recipes-container .recipe-box {
     flex-direction: column;
     min-height: 320px;
     margin-bottom: 50px;
     align-items: center;
   }
-  .recipes .recipes-content .recipes-container .recipe-box .recipe-img {
+  .your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img img {
     width: 300px;
-    min-height: 150px;
+    height: 150px;
   }
-  .recipes .recipes-content .recipes-container .recipe-box .recipe-desc {
+  .your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc {
     width: 300px;
     font-size: 8px;
   }
-  .recipes .recipes-content .recipes-container .recipe-box .recipe-desc h1 {
+  .your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc h1 {
     margin-top: 10px;
     font-size: 10px;
   }
-  .recipes .recipes-content .recipes-container .recipe-box .recipe-desc .recipe-servings {
+  .your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-desc .recipe-servings {
     margin-bottom: 20px;
   }
 }
