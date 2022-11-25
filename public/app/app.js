@@ -91,7 +91,7 @@ var RECIPES = [
 var _db = "";
 var userExists = false;
 var userDisplayName = "";
-var _userProfileInfo = "";
+var _userProfileInfo = {};
 
 function loadDefaultRecipes() {
   $.each(RECIPES, function (index, recipe) {
@@ -189,6 +189,56 @@ function loadFullRecipe() {
   });
 }
 
+function loadYourRecipeFull() {
+  $(".your-recipe-box").click(function (e) {
+    let recipeIndex = e.currentTarget.id;
+    console.log("attempted to load recipes");
+    $("#app").html(`<div class="recipe-full">
+    <div class="recipe-full-content">
+      <div class="recipe-full-basic">
+        <div class="recipe-full-img">
+          <h2 class="recipe-sideways-heading">${RECIPES[recipeIndex].recipeName}</h2>
+          <img src="images/${RECIPES[recipeIndex].recipeImage}" alt="" />
+        </div>
+        <div class="recipe-full-desc">
+          <h2>Description:</h2>
+          <p>
+          ${RECIPES[recipeIndex].recipeDesc}
+          </p>
+          <h3>Total Time:</h3>
+          <p>${RECIPES[recipeIndex].recipeTime}</p>
+          <h3>Servings:</h3>
+          <p>${RECIPES[recipeIndex].recipeServings}</p>
+        </div>
+      </div>
+      <div class="recipe-full-ingredients">
+        <h2>Ingredients:</h2>
+        <li>${RECIPES[recipeIndex].recipeIngOne}</li>
+        <li>${RECIPES[recipeIndex].recipeIngTwo}</li>
+        <li>${RECIPES[recipeIndex].recipeIngThree}</li>
+        <li>${RECIPES[recipeIndex].recipeIngFour}</li>
+        <li>${RECIPES[recipeIndex].recipeIngFive}</li>
+        <li>${RECIPES[recipeIndex].recipeIngSix}</li>
+        <li>${RECIPES[recipeIndex].recipeIngSeven}</li>
+        <li>${RECIPES[recipeIndex].recipeIngEight}</li>
+      </div>
+      <div class="recipe-full-inst">
+        <h2>Instructions:</h2>
+        <li>${RECIPES[recipeIndex].recipeInstOne}</li>
+        <li>${RECIPES[recipeIndex].recipeInstTwo}</li>
+        <li>${RECIPES[recipeIndex].recipeInstThree}</li>
+        <li>${RECIPES[recipeIndex].recipeInstFour}</li>
+        <li>${RECIPES[recipeIndex].recipeInstFive}</li>
+      </div>
+      <div class="recipe-full-btns">
+        <div id="recipe-full-back">Go Back</div>
+      </div>
+    </div>
+  </div>
+  `);
+  });
+}
+
 // how to get it to refresh the scroll position when reloading the content?
 
 function changeRoute() {
@@ -203,7 +253,7 @@ function changeRoute() {
       loadDefaultRecipes();
     });
   } else {
-    $.get(`pages/your-recipes/your-recipes.html`, function (data) {
+    $.get(`pages/browse/browse.html`, function (data) {
       $("#app").html(data);
 
       loadDefaultRecipes();
@@ -218,28 +268,106 @@ function initURLListener() {
   $("#navYourRecipes").hide();
 }
 
-function loadLists() {
-  let listString = "<ul>";
-  $.each(_userProfileInfo.lists, function (idx, list) {
-    listString += `<p>list stuff #${idx}, other stuff ${list.listItems.length}</p>`;
-  });
-  listString += "</ul>";
-  $("#app").append(listString);
-}
+// function loadLists() {
+//   let listString = "<ul>";
+//   $.each(_userProfileInfo.lists, function (idx, list) {
+//     listString += `<p>list stuff #${idx}, other stuff ${list.listItems.length}</p>`;
+//   });
+//   listString += "</ul>";
+//   $("#app").append(listString);
+// }
 
 // loadListItems => just change LISTS to _userProfileInfo.lists[]
 
-function addMainList() {
-  let newListName = $("#listName").val();
-  let newListObj = {
-    name: newListName,
-    listItems: [],
+function loadUserRecipes() {
+  $.each(_userProfileInfo.recipes, function (index, _userProfileInfo) {
+    // $("#app").html(`index + ${index}`);
+    // let recipeIndex = "";
+    $(
+      ".your-recipes-container"
+    ).append(`<div class="your-recipe-box" id="${index}">
+    <div class="recipe-img">
+      <div class="recipe-buttons">
+        <div
+          id="recipe-btn-view"
+          onclick="loadYourRecipeFull()"
+          class="recipe-btn"
+        >
+          View
+        </div>
+        <div id="recipe-btn-edit" class="recipe-btn">Edit Recipe</div>
+        <div id="recipe-btn-delete" class="recipe-btn">Delete</div>
+      </div>
+      <img src="images/${_userProfileInfo.RECIPES[index].recipeImage}.jpg" alt="" />
+    </div>
+    <div class="recipe-desc">
+      <h1>${_userProfileInfo.RECIPES[recipeIndex].recipeName}</h1>
+      <p>
+        something random here
+      </p>
+      <div class="recipe-time">
+        <div class="recipe-time-img"></div>
+        <p>1hr 24min</p>
+      </div>
+      <div class="recipe-servings">
+        <div class="recipe-servings-img"></div>
+        <p>4 servings</p>
+      </div>
+    </div>
+  </div>`);
+  });
+}
+
+function createRecipeSubmit() {
+  let newRecipeName = $("#create-name").val();
+  let newRecipeDesc = $("#create-description").val();
+  let newRecipeTime = $("#create-time").val();
+  let newRecipeServings = $("#create-name").val();
+  // let newRecipeImage =
+  let newRecipeIngOne = $("#ingOne").val();
+  let newRecipeIngTwo = $("#ingTwo").val();
+  let newRecipeIngThree = $("#ingThree").val();
+  let newRecipeIngFour = $("#ingFour").val();
+  let newRecipeIngFive = $("#ingFive").val();
+  let newRecipeIngSix = $("#ingSix").val();
+  let newRecipeIngSeven = $("#ingSeven").val();
+  let newRecipeIngEight = $("#ingEight").val();
+  let newRecipeInstOne = $("#instOne").val();
+  let newRecipeInstTwo = $("#instTwo").val();
+  let newRecipeInstThree = $("#instThree").val();
+  let newRecipeInstFour = $("#instFour").val();
+  let newRecipeInstFive = $("#instFive").val();
+
+  let newRecipeObj = {
+    recipeName: newRecipeName,
+    recipeDesc: newRecipeDesc,
+    recipeTime: newRecipeTime,
+    recipeServings: newRecipeServings,
+    recipeImage: "",
+    recipeIngOne: newRecipeIngOne,
+    recipeIngTwo: newRecipeIngTwo,
+    recipeIngThree: newRecipeIngThree,
+    recipeIngFour: "",
+    recipeIngFive: "",
+    recipeIngSix: "",
+    recipeIngSeven: "",
+    recipeIngEight: "",
+    recipeInstOne: newRecipeInstOne,
+    recipeInstTwo: newRecipeInstTwo,
+    recipeInstThree: newRecipeInstThree,
+    recipeInstFour: "",
+    recipeInstFive: "",
   };
 
-  _userProfileInfo.lists.push(newListObj);
+  // left off at 12:49 on the last video
+
+  console.log(newRecipeObj);
+
+  _userProfileInfo.recipes.push(newRecipeObj);
   updateUserInfo(_userProfileInfo);
-  loadLists();
-  $("#listName").val("");
+  loadUserRecipes();
+  // loadUserRecipes();
+  // $("#listName").val("");
 }
 
 function updateUserInfo(userObj) {
@@ -255,7 +383,7 @@ function updateUserInfo(userObj) {
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      console.log("update error " + errorMessage);
+      console.log("update doc error " + errorMessage);
     });
 }
 
@@ -278,16 +406,37 @@ function initFirebase() {
       console.log("app.js > line 36 > auth change logged in");
       userExists = true;
       if (user.displayName) {
-        $(".nav-links").append(`<div id="nav-fName">${user.displayName}</div>`);
+        $("#navCreate").click(function () {
+          console.log("clicked create logged in");
+
+          setTimeout(function () {
+            location.href = "#create";
+
+            setTimeout(function () {
+              $("#header-fName").html(
+                `hey ${user.displayName}, create your recipe!`
+              );
+            }, 50);
+          }, 50);
+        });
+
+        $("#navYourRecipes").click(function () {
+          // console.log("clicked your-recipes");
+          setTimeout(function () {
+            $("#your-recipes-header").html(
+              `hey ${user.displayName}, here are your recipes!`
+            );
+          }, 50);
+        });
       }
     } else {
       _db = "";
-      _userProfileInfo = "";
+      _userProfileInfo = {};
       console.log("app.js > line 38 > auth change logged out");
       userExists = false;
       displayName = "";
       $("#navCreate").click(function () {
-        console.log("clicked create");
+        console.log("clicked create logged out");
 
         setTimeout(function () {
           location.href = "#login";
@@ -307,7 +456,7 @@ function createAccount() {
     firstName: fName,
     lastName: lName,
     email: email,
-    lists: [],
+    recipes: [],
   };
   console.log("create " + fName + " " + lName);
 
@@ -346,18 +495,17 @@ function createAccount() {
       $("#navLogin").hide();
       $("#navSignOut").show();
       $("#navYourRecipes").show();
-      $(".nav-links").append(`<div id="nav-fName">${userDisplayName}</div>`);
-      // $("#nav-fName").html(fName);
-      // $.get(`pages/your-recipes/your-recipes.html`, function (data) {
-      //   $("#app").html(data);
-      // });
     })
+
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      $(".signup-form").append(`<p>Sign up failed: email is invalid.</p>`);
       console.log("create error " + errorMessage);
       // ..
     });
+
+  logInUpdatePage(user);
 }
 
 function updateUserContent() {
@@ -394,32 +542,35 @@ function logIn() {
       $("#navLogin").hide();
       $("#navSignOut").show();
       $("#navYourRecipes").show();
+      _db
+        .collection("Users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          _userProfileInfo = doc.data();
+          console.log("login userInfo ", _userProfileInfo);
+        })
+        .catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+
+          console.log("user data retrieval error " + errorMessage);
+        });
 
       logInUpdatePage(user);
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
+      $(".login-form").append(
+        `<p>Login failed: username and/or password is incorrect.</p>`
+      );
 
       console.log("logged in error " + errorMessage);
     });
 }
 
-function signInAnon() {
-  firebase
-    .auth()
-    .signInAnonymously()
-    .then(() => {
-      // Signed in..
-      console.log("signed in");
-      $("#navLogin").hide();
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log("Error signing in " + errorCode + " " + errorMessage);
-    });
-}
+// need to figure out an error with too many signin attempts locking you out
 
 function signOut() {
   firebase
