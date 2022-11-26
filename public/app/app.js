@@ -251,6 +251,7 @@ function changeRoute() {
       $("#app").html(data);
 
       loadDefaultRecipes();
+      loadUserRecipes();
     });
   } else {
     $.get(`pages/browse/browse.html`, function (data) {
@@ -280,13 +281,13 @@ function initURLListener() {
 // loadListItems => just change LISTS to _userProfileInfo.lists[]
 
 function loadUserRecipes() {
-  $.each(_userProfileInfo.recipes, function (index, _userProfileInfo) {
+  $.each(_userProfileInfo.recipes, function (index, recipe) {
     // $("#app").html(`index + ${index}`);
     // let recipeIndex = "";
     $(
       ".your-recipes-container"
     ).append(`<div class="your-recipe-box" id="${index}">
-    <div class="recipe-img">
+    <div class="your-recipe-img">
       <div class="recipe-buttons">
         <div
           id="recipe-btn-view"
@@ -298,25 +299,52 @@ function loadUserRecipes() {
         <div id="recipe-btn-edit" class="recipe-btn">Edit Recipe</div>
         <div id="recipe-btn-delete" class="recipe-btn">Delete</div>
       </div>
-      <img src="images/${_userProfileInfo.RECIPES[index].recipeImage}.jpg" alt="" />
+      <img src="images/${recipe.recipeImage}.jpg" alt="" />
     </div>
     <div class="recipe-desc">
-      <h1>${_userProfileInfo.RECIPES[recipeIndex].recipeName}</h1>
+      <h1>${recipe.recipeName}</h1>
       <p>
-        something random here
+      ${recipe.recipeDesc}
       </p>
       <div class="recipe-time">
         <div class="recipe-time-img"></div>
-        <p>1hr 24min</p>
+        <p>${recipe.recipeTime}</p>
       </div>
       <div class="recipe-servings">
         <div class="recipe-servings-img"></div>
-        <p>4 servings</p>
+        <p>${recipe.recipeServings}</p>
       </div>
     </div>
   </div>`);
   });
 }
+
+// function loadUserRecipesTest() {
+//   console.log("loadUserRecipesTest running");
+//   $.each(RECIPES, function (index, recipe) {
+//     $(
+//       ".your-recipes-container"
+//     ).append(`<div class="your-recipe-box" id="${index}">
+//     <div class="recipe-img">
+//     <img src="images/${recipe.recipeImage}" alt="" />
+//     </div>
+//     <div class="recipe-desc">
+//       <h1>${recipe.recipeName}</h1>
+//       <p>
+//       ${recipe.recipeDesc}
+//       </p>
+//       <div class="recipe-time">
+//         <div class="recipe-time-img"></div>
+//         <p>${recipe.recipeTime}</p>
+//       </div>
+//       <div class="recipe-servings">
+//         <div class="recipe-servings-img"></div>
+//         <p>${recipe.recipeServings}</p>
+//       </div>
+//     </div>
+//   </div>`);
+//   });
+// }
 
 function createRecipeSubmit() {
   let newRecipeName = $("#create-name").val();

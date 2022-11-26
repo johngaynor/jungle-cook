@@ -738,16 +738,16 @@ p {
   display: flex;
   margin-top: 50px;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img img {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img img {
   height: 263px;
   width: 300px;
   border-radius: 24px;
   object-fit: cover;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img .recipe-buttons {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons {
   background-color: red;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img .recipe-buttons .recipe-btn {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons .recipe-btn {
   height: 42px;
   width: 128px;
   border-radius: 26px;
@@ -760,16 +760,16 @@ p {
   cursor: pointer;
   display: none;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img .recipe-buttons #recipe-btn-view {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons #recipe-btn-view {
   margin: 110px 86px;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img .recipe-buttons #recipe-btn-edit {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons #recipe-btn-edit {
   margin: 278px 10px 0 15px;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img .recipe-buttons #recipe-btn-delete {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons #recipe-btn-delete {
   margin: 278px 15px 0 158px;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-img:hover .recipe-btn {
+.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img:hover .recipe-btn {
   display: flex;
 }
 .your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .recipe-desc {
