@@ -254,10 +254,11 @@ function changeRoute() {
       loadUserRecipes();
     });
   } else {
-    $.get(`pages/browse/browse.html`, function (data) {
+    $.get(`pages/home/home.html`, function (data) {
       $("#app").html(data);
 
-      loadDefaultRecipes();
+      // loadDefaultRecipes();
+      // loadUserRecipes();
     });
   }
 }
