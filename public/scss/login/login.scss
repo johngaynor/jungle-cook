@@ -77,6 +77,10 @@
   }
 }
 
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 100px $site-yellow inset;
+}
+
 @media screen and (max-width: 900px) {
   .login {
     .login-container {
