@@ -93,7 +93,7 @@ var userExists = false;
 var userDisplayName = "";
 var _userProfileInfo = {};
 
-// this area is for browse.html funtionality //////////////
+// this area is for browse.html functionality //////////////
 function initDefaultRecipeStyling() {
   $("#app").html(`<div class="recipes">
   <div class="recipes-content">
@@ -107,6 +107,7 @@ function initDefaultRecipeStyling() {
 
 function returnToDefaultRecipes() {
   $("#recipe-full-back").click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 0);
     initDefaultRecipeStyling();
     loadDefaultRecipes();
   });
@@ -115,7 +116,7 @@ function returnToDefaultRecipes() {
 function loadFullDefaultRecipe() {
   $(".recipe-box").click(function (e) {
     let recipeIndex = e.currentTarget.id;
-    console.log("clicked " + recipeIndex);
+    console.log("clicked default recipe " + recipeIndex);
     $("#app").html(`<div class="recipe-full">
     <div class="recipe-full-content">
       <div class="recipe-full-basic">
@@ -159,6 +160,7 @@ function loadFullDefaultRecipe() {
     </div>
   </div>
   `);
+    $("html, body").animate({ scrollTop: 0 }, 0);
 
     returnToDefaultRecipes();
   });
@@ -190,56 +192,6 @@ function loadDefaultRecipes() {
   });
 }
 ///////////////////////////////////////////////////////////
-
-function loadYourRecipeFull() {
-  $(".your-recipe-box").click(function (e) {
-    let recipeIndex = e.currentTarget.id;
-    console.log("attempted to load recipes");
-    $("#app").html(`<div class="recipe-full">
-    <div class="recipe-full-content">
-      <div class="recipe-full-basic">
-        <div class="recipe-full-img">
-          <h2 class="recipe-sideways-heading">${RECIPES[recipeIndex].recipeName}</h2>
-          <img src="images/${RECIPES[recipeIndex].recipeImage}" alt="" />
-        </div>
-        <div class="recipe-full-desc">
-          <h2>Description:</h2>
-          <p>
-          ${RECIPES[recipeIndex].recipeDesc}
-          </p>
-          <h3>Total Time:</h3>
-          <p>${RECIPES[recipeIndex].recipeTime}</p>
-          <h3>Servings:</h3>
-          <p>${RECIPES[recipeIndex].recipeServings}</p>
-        </div>
-      </div>
-      <div class="recipe-full-ingredients">
-        <h2>Ingredients:</h2>
-        <li>${RECIPES[recipeIndex].recipeIngOne}</li>
-        <li>${RECIPES[recipeIndex].recipeIngTwo}</li>
-        <li>${RECIPES[recipeIndex].recipeIngThree}</li>
-        <li>${RECIPES[recipeIndex].recipeIngFour}</li>
-        <li>${RECIPES[recipeIndex].recipeIngFive}</li>
-        <li>${RECIPES[recipeIndex].recipeIngSix}</li>
-        <li>${RECIPES[recipeIndex].recipeIngSeven}</li>
-        <li>${RECIPES[recipeIndex].recipeIngEight}</li>
-      </div>
-      <div class="recipe-full-inst">
-        <h2>Instructions:</h2>
-        <li>${RECIPES[recipeIndex].recipeInstOne}</li>
-        <li>${RECIPES[recipeIndex].recipeInstTwo}</li>
-        <li>${RECIPES[recipeIndex].recipeInstThree}</li>
-        <li>${RECIPES[recipeIndex].recipeInstFour}</li>
-        <li>${RECIPES[recipeIndex].recipeInstFive}</li>
-      </div>
-      <div class="recipe-full-btns">
-        <div id="recipe-full-back">Go Back</div>
-      </div>
-    </div>
-  </div>
-  `);
-  });
-}
 
 // this area is for url navigation & nav functionality ////
 function changeRoute() {
@@ -328,6 +280,8 @@ function initFirebase() {
           location.href = "#login";
         }, 50);
       });
+
+      // cannot figure out why this works when the user is logged in, but not after creating an account. For some reason it's running the "clicked create logged out" when the auth change says its logged in.
     }
   });
 }
@@ -459,76 +413,8 @@ function signOut() {
 }
 ///////////////////////////////////////////////////////////
 
-function logInUpdatePage(user) {
-  location.href = "#create";
-  console.log("update page works");
-  setTimeout(function () {
-    console.log("page loaded correctly");
-    $("#header-fName").html(`hey ${user.displayName}, create your recipe!`);
-  }, 50);
-  // 15ms is the lowest I could go for it to still work, should probably set it higher in case other computers don't load as fast
-}
-
-function deleteUserRecipe(recipeIndex, index) {
-  // let recipeIndex = e.currentTarget.id;
-  console.log("attempted to delete");
-  console.log(_userProfileInfo.recipes);
-  _userProfileInfo.recipes.splice(index, 1);
-  console.log(_userProfileInfo.recipes);
-  updateUserInfo(_userProfileInfo);
-  $(".your-recipes-container").html("");
-  loadUserRecipes();
-}
-
-function deleteTest() {
-  loadUserRecipes();
-}
-
-function loadUserRecipes() {
-  $.each(_userProfileInfo.recipes, function (index, recipe) {
-    // $("#app").html(`index + ${index}`);
-    // let recipeIndex = "";
-    $(
-      ".your-recipes-container"
-    ).append(`<div class="your-recipe-box" id="${index}">
-    <div class="your-recipe-img">
-      <div class="recipe-buttons">
-        <div
-          id="recipe-btn-view"
-          onclick="loadYourRecipeFull()"
-          class="recipe-btn"
-        >
-          View
-        </div>
-        <div id="recipe-btn-edit"
-        onclick="deleteTest()"
-        class="recipe-btn">Edit Recipe</div>
-        <div
-        id="recipe-btn-delete"
-        onclick="deleteUserRecipe()"
-        class="recipe-btn">Delete</div>
-      </div>
-      <img src="images/${recipe.recipeImage}.jpg" alt="" />
-    </div>
-    <div class="recipe-desc">
-      <h1>${recipe.recipeName}</h1>
-      <p>
-      ${recipe.recipeDesc}
-      </p>
-      <div class="recipe-time">
-        <div class="recipe-time-img"></div>
-        <p>${recipe.recipeTime}</p>
-      </div>
-      <div class="recipe-servings">
-        <div class="recipe-servings-img"></div>
-        <p>${recipe.recipeServings}</p>
-      </div>
-    </div>
-  </div>`);
-  });
-}
-
-function createRecipeSubmit(recipeIndex) {
+// this area is for user recipe functions /////////////////
+function createRecipeSubmit() {
   let newRecipeName = $("#create-name").val();
   let newRecipeDesc = $("#create-description").val();
   let newRecipeTime = $("#create-time").val();
@@ -576,8 +462,153 @@ function createRecipeSubmit(recipeIndex) {
   _userProfileInfo.recipes.push(newRecipeObj);
   updateUserInfo(_userProfileInfo);
   loadUserRecipes();
-  // loadUserRecipes();
-  // $("#listName").val("");
+
+  $("#create-img").val("");
+  $("#create-name").val("");
+  $("#create-description").val("");
+  $("#create-time").val("");
+  $("#create-serving-size").val("");
+  $("#ingOne").val("");
+  $("#ingTwo").val("");
+  $("#ingThree").val("");
+  $("#instOne").val("");
+  $("#instTwo").val("");
+  $("#instThree").val("");
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+}
+
+function initUserRecipeStyling() {
+  console.log(_userProfileInfo);
+  $("#app").html(`<div class="your-recipes">
+  <div class="your-recipes-content">
+    <h1 id="your-recipes-header">Hey ${_userProfileInfo.firstName}, here are your recipes!</h1>
+    <div class="your-recipes-container"></div>
+  </div>
+</div>`);
+}
+
+function returnToUserRecipes() {
+  $("#user-recipe-full-back").click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 0);
+    initUserRecipeStyling();
+    loadUserRecipes();
+  });
+}
+
+function loadUserRecipeFull(index) {
+  // $("#app").html(`<p>this is the index value: ${index}</p>`);
+  console.log(
+    `clicked recipe idx=${index}, running function loadUserRecipeFull`
+  );
+  $("#app").html(`<div class="recipe-full">
+    <div class="recipe-full-content">
+      <div class="recipe-full-basic">
+        <div class="recipe-full-img">
+          <h2 class="recipe-sideways-heading">${_userProfileInfo.recipes[index].recipeName}</h2>
+          <img src="images/${_userProfileInfo.recipes[index].recipeImage}" alt="" />
+        </div>
+        <div class="recipe-full-desc">
+          <h2>Description:</h2>
+          <p>
+          ${_userProfileInfo.recipes[index].recipeDesc}
+          </p>
+          <h3>Total Time:</h3>
+          <p>${_userProfileInfo.recipes[index].recipeTime}</p>
+          <h3>Servings:</h3>
+          <p>${_userProfileInfo.recipes[index].recipeServings}</p>
+        </div>
+      </div>
+      <div class="recipe-full-ingredients">
+        <h2>Ingredients:</h2>
+        <li>${_userProfileInfo.recipes[index].recipeIngOne}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngTwo}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngThree}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngFour}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngFive}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngSix}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngSeven}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngEight}</li>
+      </div>
+      <div class="recipe-full-inst">
+        <h2>Instructions:</h2>
+        <li>${_userProfileInfo.recipes[index].recipeInstOne}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstTwo}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstThree}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstFour}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstFive}</li>
+      </div>
+      <div class="recipe-full-btns">
+        <div id="user-recipe-full-back">Go Back</div>
+        <div id="recipe-full-edit">Edit Recipe</div>
+      </div>
+    </div>
+  </div>
+  `);
+
+  $("html, body").animate({ scrollTop: 0 }, 0);
+  returnToUserRecipes();
+}
+
+function loadUserRecipes() {
+  $.each(_userProfileInfo.recipes, function (index, recipe) {
+    $(
+      ".your-recipes-container"
+    ).append(`<div class="your-recipe-box" id="${index}">
+    <div class="your-recipe-img">
+      <div class="recipe-buttons">
+        <div
+          id="recipe-btn-view"
+          onclick="loadUserRecipeFull(${index})"
+          class="recipe-btn"
+        >
+          View
+        </div>
+        <div id="recipe-btn-edit"
+        onclick=""
+        class="recipe-btn">Edit Recipe</div>
+        <div
+        id="recipe-btn-delete"
+        onclick="deleteUserRecipe()"
+        class="recipe-btn">Delete</div>
+      </div>
+      <img src="images/${recipe.recipeImage}.jpg" alt="" />
+    </div>
+    <div class="recipe-desc">
+      <h1>${recipe.recipeName}</h1>
+      <p>
+      ${recipe.recipeDesc}
+      </p>
+      <div class="recipe-time">
+        <div class="recipe-time-img"></div>
+        <p>${recipe.recipeTime}</p>
+      </div>
+      <div class="recipe-servings">
+        <div class="recipe-servings-img"></div>
+        <p>${recipe.recipeServings}</p>
+      </div>
+    </div>
+  </div>`);
+  });
+}
+
+function deleteUserRecipe(index) {
+  console.log(_userProfileInfo.recipes);
+  _userProfileInfo.recipes.splice(index, 1);
+  console.log(_userProfileInfo.recipes);
+  updateUserInfo(_userProfileInfo);
+  $(".your-recipes-container").html("");
+  loadUserRecipes();
+}
+///////////////////////////////////////////////////////////
+
+function logInUpdatePage(user) {
+  location.href = "#create";
+  console.log("update page works");
+  setTimeout(function () {
+    console.log("page loaded correctly");
+    $("#header-fName").html(`hey ${user.displayName}, create your recipe!`);
+  }, 50);
+  // 15ms is the lowest I could go for it to still work, should probably set it higher in case other computers don't load as fast
 }
 
 function updateUserInfo(userObj) {
@@ -603,7 +634,7 @@ $(document).ready(function () {
     initFirebase();
     // signInAnon();
   } catch (error) {
-    console.log("error ", error);
+    console.log("firebase error ", error);
   }
   initURLListener();
   navListeners();
@@ -637,3 +668,8 @@ $(document).ready(function () {
 // how to get it to refresh the scroll position when reloading the content?
 
 // individual error messages for specific errors (i.e. login error for invalid password vs too many failed attempts)
+
+// $("html, body").animate({ scrollTop: 0 }, 0);
+// this can be used to snap the scroll wheel up to the top of the page immediately, not sure if there's a faster way to do it without the animation
+
+// trying to figure out how to create an alert that does not require the user to dismiss it

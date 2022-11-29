@@ -87,7 +87,8 @@
       display: flex;
 
       #recipe-full-edit,
-      #recipe-full-back {
+      #recipe-full-back,
+      #your-recipe-full-back {
         height: 42px;
         width: 128px;
         cursor: pointer;
@@ -103,6 +104,20 @@
     }
   }
 }
+
+// #your-recipe-full-back {
+//   height: 42px;
+//   width: 128px;
+//   cursor: pointer;
+//   background-color: $site-yellow;
+//   border-radius: 26px;
+//   font-family: Caveat;
+//   font-size: 20px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-right: 20px;
+// }
 
 @media screen and (max-width: 970px) {
   .recipe-full {
