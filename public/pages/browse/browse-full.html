@@ -1,44 +1,38 @@
 <div class="recipe-full">
-  <div class="recipe-full-content">
-    <div class="recipe-full-basic">
-      <div class="recipe-full-img">
-        <h2 class="recipe-sideways-heading">supreme pizza</h2>
-        <img src="images/recipe-pizza.jpg" alt="" />
-      </div>
-      <div class="recipe-full-desc">
-        <h2>Description:</h2>
-        <p>
-          Make pizza night super duper out of this world with homemade pizza.
-          This recipe is supreme with vegetables and two types of meat. Yum!
-        </p>
-        <h3>Total Time:</h3>
-        <p>1h 24min</p>
-        <h3>Servings:</h3>
-        <p>4 servings</p>
-      </div>
+  <div class="recipe-full-basic">
+    <div class="recipe-full-img">
+      <h2 class="recipe-sideways-heading">uhh</h2>
+      <img src="images/${RECIPES[recipeIndex].recipeImage}" alt="" />
     </div>
-    <div class="recipe-full-ingredients">
-      <h2>Ingredients:</h2>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
-      <li>ing</li>
+    <div class="recipe-full-desc">
+      <h2>Description:</h2>
+      <p>${RECIPES[recipeIndex].recipeDesc}</p>
+      <h3>Total Time:</h3>
+      <p>${RECIPES[recipeIndex].recipeTime}</p>
+      <h3>Servings:</h3>
+      <p>${RECIPES[recipeIndex].recipeServings}</p>
     </div>
-    <div class="recipe-full-inst">
-      <h2>Instructions:</h2>
-      <li>inst</li>
-      <li>inst</li>
-      <li>inst</li>
-      <li>inst</li>
-      <li>inst</li>
-    </div>
-    <div class="recipe-full-btns">
-      <div id="recipe-full-edit">Edit Recipe</div>
-      <div id="recipe-full-back">Go Back</div>
-    </div>
+  </div>
+  <div class="recipe-full-ingredients">
+    <h2>Ingredients:</h2>
+    <li>${RECIPES[recipeIndex].recipeIngOne}</li>
+    <li>${RECIPES[recipeIndex].recipeIngTwo}</li>
+    <li>${RECIPES[recipeIndex].recipeIngThree}</li>
+    <li>${RECIPES[recipeIndex].recipeIngFour}</li>
+    <li>${RECIPES[recipeIndex].recipeIngFive}</li>
+    <li>${RECIPES[recipeIndex].recipeIngSix}</li>
+    <li>${RECIPES[recipeIndex].recipeIngSeven}</li>
+    <li>${RECIPES[recipeIndex].recipeIngEight}</li>
+  </div>
+  <div class="recipe-full-inst">
+    <h2>Instructions:</h2>
+    <li>${RECIPES[recipeIndex].recipeInstOne}</li>
+    <li>${RECIPES[recipeIndex].recipeInstTwo}</li>
+    <li>${RECIPES[recipeIndex].recipeInstThree}</li>
+    <li>${RECIPES[recipeIndex].recipeInstFour}</li>
+    <li>${RECIPES[recipeIndex].recipeInstFive}</li>
+  </div>
+  <div class="recipe-full-btns">
+    <div id="recipe-full-back">Go Back</div>
   </div>
 </div>

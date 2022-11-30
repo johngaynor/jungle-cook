@@ -166,7 +166,7 @@ function loadFullDefaultRecipe() {
 
 function loadDefaultRecipes() {
   $.each(RECIPES, function (index, recipe) {
-    $(".recipes-container").append(` <div class="recipe-box" id="${index}">
+    $(".recipes-container").append(`<div class="recipe-box" id="${index}">
     <div class="recipe-img">
       <img src="images/${recipe.recipeImage}" alt="" />
     </div>
@@ -436,7 +436,7 @@ function loadUserRecipeFull(index) {
   returnToUserRecipes();
 }
 
-function loadUserRecipes() {
+function loadUserRecipesOLD() {
   $.each(_userProfileInfo.recipes, function (index, recipe) {
     $(
       ".your-recipes-container"
@@ -470,6 +470,30 @@ function loadUserRecipes() {
         <p>${recipe.recipeTime}</p>
       </div>
       <div class="recipe-servings">
+        <div class="recipe-servings-img"></div>
+        <p>${recipe.recipeServings}</p>
+      </div>
+    </div>
+  </div>`);
+  });
+}
+
+function loadUserRecipes() {
+  $.each(_userProfileInfo.recipes, function (index, recipe) {
+    $(".your-recipes-container").append(`<div class="recipe-box" id="${index}">
+    <div class="recipe-img">
+      <img src="images/${recipe.recipeImage}" alt="" />
+    </div>
+    <div class="recipe-desc">
+      <h1>${recipe.recipeName}</h1>
+      <h2>
+      ${recipe.recipeDesc}
+      </h2>
+      <div class="recipe-time-servings">
+        <div class="recipe-time-img"></div>
+        <p>${recipe.recipeTime}</p>
+      </div>
+      <div class="recipe-time-servings">
         <div class="recipe-servings-img"></div>
         <p>${recipe.recipeServings}</p>
       </div>
@@ -595,7 +619,7 @@ function changeRoute() {
       loadUserRecipes();
     });
   } else {
-    $.get(`pages/browse/browse.html`, function (data) {
+    $.get(`pages/login/login.html`, function (data) {
       $("#app").html(data);
     });
   }

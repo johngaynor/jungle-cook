@@ -1,4 +1,5 @@
-.recipes {
+.recipes,
+.your-recipes {
   min-height: 1000px;
   background-image: linear-gradient(
       rgba($site-green, 0.5),
@@ -11,7 +12,8 @@
   display: flex;
   justify-content: center;
 
-  .recipes-content {
+  .recipes-content,
+  .your-recipes-content {
     padding-top: 200px;
     padding-bottom: 147px;
     min-height: 100px;
@@ -23,7 +25,8 @@
       display: block;
     }
 
-    .recipes-container {
+    .recipes-container,
+    .your-recipes-container {
       min-height: 100px;
       display: flex;
       flex-wrap: wrap;
@@ -109,28 +112,32 @@
 }
 
 @media screen and (max-width: 1330px) {
-  .recipes {
-    .recipes-content {
+  .recipes,
+  .your-recipes {
+    .recipes-content,
+    .your-recipes-content {
       width: 90%;
     }
   }
 }
 
 @media screen and (max-width: 1220px) {
-  .recipes-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    h1 {
-      width: 524px;
-    }
-
-    .recipes-container {
-      width: 524px;
+  .recipes,
+  .your-recipes {
+    .recipes-content,
+    .your-recipes-content {
+      display: flex;
       flex-direction: column;
+      align-items: center;
 
-      .recipe-box {
+      h1 {
+        width: 524px;
+      }
+
+      .recipes-container,
+      .your-recipes-container {
+        width: 524px;
+        flex-direction: column;
       }
     }
   }
@@ -139,8 +146,10 @@
 // why does it require nesting for the 1330px one but not 1220? It works with a background color but not the width
 
 @media screen and (max-width: 640px) {
-  .recipes {
-    .recipes-content {
+  .recipes,
+  .your-recipes {
+    .recipes-content,
+    .your-recipes-content {
       padding-top: 120px;
 
       h1 {
@@ -148,7 +157,8 @@
         width: 300px;
       }
 
-      .recipes-container {
+      .recipes-container,
+      .your-recipes-container {
         margin-top: -50px;
         width: 300px;
 
@@ -156,6 +166,7 @@
           flex-direction: column;
           min-height: 320px;
           margin-bottom: 50px;
+          width: 300px;
 
           .recipe-img {
             height: 150px;
