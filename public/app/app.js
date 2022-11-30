@@ -94,8 +94,10 @@ var userDisplayName = "";
 var _userProfileInfo = {};
 
 // this area is for browse.html functionality //////////////
-function initDefaultRecipeStyling() {
-  $("#app").html(`<div class="recipes">
+function returnToDefaultRecipes() {
+  $("#recipe-full-back").click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 0);
+    $("#app").html(`<div class="recipes">
   <div class="recipes-content">
     <h1>Recipes: Try some today!</h1>
     <div class="recipes-container">
@@ -103,14 +105,10 @@ function initDefaultRecipeStyling() {
     </div>
   </div>
 </div>`);
-}
-
-function returnToDefaultRecipes() {
-  $("#recipe-full-back").click(function () {
-    $("html, body").animate({ scrollTop: 0 }, 0);
-    initDefaultRecipeStyling();
     loadDefaultRecipes();
   });
+
+  // if this doesn't work, you need to create a separate function initDefaultRecipeStyling() and load in the containers separately.
 }
 
 function loadFullDefaultRecipe() {
@@ -168,20 +166,20 @@ function loadFullDefaultRecipe() {
 
 function loadDefaultRecipes() {
   $.each(RECIPES, function (index, recipe) {
-    $(".recipes-container").append(`<div class="recipe-box" id="${index}">
+    $(".recipes-container").append(` <div class="recipe-box" id="${index}">
     <div class="recipe-img">
-    <img src="images/${recipe.recipeImage}" alt="" />
+      <img src="images/${recipe.recipeImage}" alt="" />
     </div>
     <div class="recipe-desc">
       <h1>${recipe.recipeName}</h1>
-      <p>
+      <h2>
       ${recipe.recipeDesc}
-      </p>
-      <div class="recipe-time">
+      </h2>
+      <div class="recipe-time-servings">
         <div class="recipe-time-img"></div>
         <p>${recipe.recipeTime}</p>
       </div>
-      <div class="recipe-servings">
+      <div class="recipe-time-servings">
         <div class="recipe-servings-img"></div>
         <p>${recipe.recipeServings}</p>
       </div>
@@ -189,49 +187,6 @@ function loadDefaultRecipes() {
   </div>`);
 
     loadFullDefaultRecipe();
-  });
-}
-///////////////////////////////////////////////////////////
-
-// this area is for url navigation & nav functionality ////
-function changeRoute() {
-  let hashTag = window.location.hash;
-  let pageID = hashTag.replace("#", "");
-  // let userDisplayName = displayName;
-
-  if (pageID != "") {
-    $.get(`pages/${pageID}/${pageID}.html`, function (data) {
-      $("#app").html(data);
-
-      loadDefaultRecipes();
-      loadUserRecipes();
-    });
-  } else {
-    $.get(`pages/home/home.html`, function (data) {
-      $("#app").html(data);
-
-      // loadDefaultRecipes();
-      // loadUserRecipes();
-    });
-  }
-}
-
-function initURLListener() {
-  $(window).on("hashchange", changeRoute);
-  changeRoute();
-  $("#navSignOut").hide();
-  $("#navYourRecipes").hide();
-}
-
-function navListeners() {
-  $(".nav-bars").click(function (e) {
-    $(".nav-bars").toggleClass("active");
-    $(".nav-links").toggleClass("active");
-  });
-
-  $(".nav-links a").click(function (e) {
-    $(".nav-bars").removeClass("active");
-    $(".nav-links").removeClass("active");
   });
 }
 ///////////////////////////////////////////////////////////
@@ -414,83 +369,15 @@ function signOut() {
 ///////////////////////////////////////////////////////////
 
 // this area is for user recipe functions /////////////////
-function createRecipeSubmit() {
-  let newRecipeName = $("#create-name").val();
-  let newRecipeDesc = $("#create-description").val();
-  let newRecipeTime = $("#create-time").val();
-  let newRecipeServings = $("#create-name").val();
-  // let newRecipeImage =
-  let newRecipeIngOne = $("#ingOne").val();
-  let newRecipeIngTwo = $("#ingTwo").val();
-  let newRecipeIngThree = $("#ingThree").val();
-  let newRecipeIngFour = $("#ingFour").val();
-  let newRecipeIngFive = $("#ingFive").val();
-  let newRecipeIngSix = $("#ingSix").val();
-  let newRecipeIngSeven = $("#ingSeven").val();
-  let newRecipeIngEight = $("#ingEight").val();
-  let newRecipeInstOne = $("#instOne").val();
-  let newRecipeInstTwo = $("#instTwo").val();
-  let newRecipeInstThree = $("#instThree").val();
-  let newRecipeInstFour = $("#instFour").val();
-  let newRecipeInstFive = $("#instFive").val();
-
-  let newRecipeObj = {
-    recipeName: newRecipeName,
-    recipeDesc: newRecipeDesc,
-    recipeTime: newRecipeTime,
-    recipeServings: newRecipeServings,
-    recipeImage: "",
-    recipeIngOne: newRecipeIngOne,
-    recipeIngTwo: newRecipeIngTwo,
-    recipeIngThree: newRecipeIngThree,
-    recipeIngFour: "",
-    recipeIngFive: "",
-    recipeIngSix: "",
-    recipeIngSeven: "",
-    recipeIngEight: "",
-    recipeInstOne: newRecipeInstOne,
-    recipeInstTwo: newRecipeInstTwo,
-    recipeInstThree: newRecipeInstThree,
-    recipeInstFour: "",
-    recipeInstFive: "",
-  };
-
-  // left off at 12:49 on the last video
-
-  console.log(newRecipeObj);
-
-  _userProfileInfo.recipes.push(newRecipeObj);
-  updateUserInfo(_userProfileInfo);
-  loadUserRecipes();
-
-  $("#create-img").val("");
-  $("#create-name").val("");
-  $("#create-description").val("");
-  $("#create-time").val("");
-  $("#create-serving-size").val("");
-  $("#ingOne").val("");
-  $("#ingTwo").val("");
-  $("#ingThree").val("");
-  $("#instOne").val("");
-  $("#instTwo").val("");
-  $("#instThree").val("");
-  $("html, body").animate({ scrollTop: 0 }, "slow");
-}
-
-function initUserRecipeStyling() {
-  console.log(_userProfileInfo);
-  $("#app").html(`<div class="your-recipes">
+function returnToUserRecipes() {
+  $("#user-recipe-full-back").click(function () {
+    $("html, body").animate({ scrollTop: 0 }, 0);
+    $("#app").html(`<div class="your-recipes">
   <div class="your-recipes-content">
     <h1 id="your-recipes-header">Hey ${_userProfileInfo.firstName}, here are your recipes!</h1>
     <div class="your-recipes-container"></div>
   </div>
 </div>`);
-}
-
-function returnToUserRecipes() {
-  $("#user-recipe-full-back").click(function () {
-    $("html, body").animate({ scrollTop: 0 }, 0);
-    initUserRecipeStyling();
     loadUserRecipes();
   });
 }
@@ -590,6 +477,72 @@ function loadUserRecipes() {
   </div>`);
   });
 }
+///////////////////////////////////////////////////////////
+
+// this area is for creating/deleting user recipes ////////
+function createRecipeSubmit() {
+  let newRecipeName = $("#create-name").val();
+  let newRecipeDesc = $("#create-description").val();
+  let newRecipeTime = $("#create-time").val();
+  let newRecipeServings = $("#create-name").val();
+  // let newRecipeImage =
+  let newRecipeIngOne = $("#ingOne").val();
+  let newRecipeIngTwo = $("#ingTwo").val();
+  let newRecipeIngThree = $("#ingThree").val();
+  let newRecipeIngFour = $("#ingFour").val();
+  let newRecipeIngFive = $("#ingFive").val();
+  let newRecipeIngSix = $("#ingSix").val();
+  let newRecipeIngSeven = $("#ingSeven").val();
+  let newRecipeIngEight = $("#ingEight").val();
+  let newRecipeInstOne = $("#instOne").val();
+  let newRecipeInstTwo = $("#instTwo").val();
+  let newRecipeInstThree = $("#instThree").val();
+  let newRecipeInstFour = $("#instFour").val();
+  let newRecipeInstFive = $("#instFive").val();
+
+  let newRecipeObj = {
+    recipeName: newRecipeName,
+    recipeDesc: newRecipeDesc,
+    recipeTime: newRecipeTime,
+    recipeServings: newRecipeServings,
+    recipeImage: "",
+    recipeIngOne: newRecipeIngOne,
+    recipeIngTwo: newRecipeIngTwo,
+    recipeIngThree: newRecipeIngThree,
+    recipeIngFour: "",
+    recipeIngFive: "",
+    recipeIngSix: "",
+    recipeIngSeven: "",
+    recipeIngEight: "",
+    recipeInstOne: newRecipeInstOne,
+    recipeInstTwo: newRecipeInstTwo,
+    recipeInstThree: newRecipeInstThree,
+    recipeInstFour: "",
+    recipeInstFive: "",
+  };
+
+  // left off at 12:49 on the last video
+
+  console.log(newRecipeObj);
+
+  _userProfileInfo.recipes.push(newRecipeObj);
+  updateUserInfo(_userProfileInfo);
+  loadUserRecipes();
+
+  $("#create-img").val("");
+  $("#create-name").val("");
+  $("#create-description").val("");
+  $("#create-time").val("");
+  $("#create-serving-size").val("");
+  $("#ingOne").val("");
+  $("#ingTwo").val("");
+  $("#ingThree").val("");
+  $("#instOne").val("");
+  $("#instTwo").val("");
+  $("#instThree").val("");
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+  alert("Your recipe has been submitted!");
+}
 
 function deleteUserRecipe(index) {
   console.log(_userProfileInfo.recipes);
@@ -628,6 +581,46 @@ function updateUserInfo(userObj) {
     });
 }
 
+// this area is for url navigation & nav functionality ////
+function changeRoute() {
+  let hashTag = window.location.hash;
+  let pageID = hashTag.replace("#", "");
+  // let userDisplayName = displayName;
+
+  if (pageID != "") {
+    $.get(`pages/${pageID}/${pageID}.html`, function (data) {
+      $("#app").html(data);
+
+      loadDefaultRecipes();
+      loadUserRecipes();
+    });
+  } else {
+    $.get(`pages/browse/browse.html`, function (data) {
+      $("#app").html(data);
+    });
+  }
+}
+
+function initURLListener() {
+  $(window).on("hashchange", changeRoute);
+  changeRoute();
+  $("#navSignOut").hide();
+  $("#navYourRecipes").hide();
+}
+
+function navListeners() {
+  $(".nav-bars").click(function (e) {
+    $(".nav-bars").toggleClass("active");
+    $(".nav-links").toggleClass("active");
+  });
+
+  $(".nav-links a").click(function (e) {
+    $(".nav-bars").removeClass("active");
+    $(".nav-links").removeClass("active");
+  });
+}
+///////////////////////////////////////////////////////////
+
 $(document).ready(function () {
   try {
     let app = firebase.app();
@@ -665,11 +658,11 @@ $(document).ready(function () {
 
 // RANDOM NOTES
 
-// how to get it to refresh the scroll position when reloading the content?
-
 // individual error messages for specific errors (i.e. login error for invalid password vs too many failed attempts)
 
 // $("html, body").animate({ scrollTop: 0 }, 0);
 // this can be used to snap the scroll wheel up to the top of the page immediately, not sure if there's a faster way to do it without the animation
 
 // trying to figure out how to create an alert that does not require the user to dismiss it
+
+// if the recipe name is too long w/o spaces it runs off the page, how to fix? text-overflow?
