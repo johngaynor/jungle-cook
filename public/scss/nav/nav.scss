@@ -56,6 +56,11 @@
   }
 }
 
+.navHolder.active-nav {
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
 .nav-bars.active {
   .nav-bar:nth-child(2) {
     opacity: 0;
@@ -92,7 +97,7 @@
       background-color: #fff;
       display: flex;
       flex-direction: column;
-      transition: all 0.3s ease-in;
+      transition: all 0.3s ease-in-out;
       margin: 0 auto;
 
       a {

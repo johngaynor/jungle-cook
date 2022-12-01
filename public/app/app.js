@@ -93,8 +93,29 @@ var userExists = false;
 var userDisplayName = "";
 var _userProfileInfo = {};
 
+// adding additional instructions/ingredients /////////////
+let ingredientIndex = 3;
+let instructionIndex = 3;
+
+function addIngredient() {
+  $(".create-ingredients").append(
+    `<input type="text" placeholder="Ingredient #${ingredientIndex + 1}" />`
+  );
+
+  ingredientIndex++;
+}
+
+function addInstruction() {
+  $(".create-instructions").append(
+    `<input type="text" placeholder="Instruction #${instructionIndex + 1}" />`
+  );
+
+  instructionIndex++;
+}
+
 // this area is for browse.html functionality //////////////
 function returnToDefaultRecipes() {
+  console.log("clicked go back");
   $("#recipe-full-back").click(function () {
     $("html, body").animate({ scrollTop: 0 }, 0);
     $("#app").html(`<div class="recipes">
@@ -107,67 +128,75 @@ function returnToDefaultRecipes() {
 </div>`);
     loadDefaultRecipes();
   });
-
-  // if this doesn't work, you need to create a separate function initDefaultRecipeStyling() and load in the containers separately.
 }
 
-function loadFullDefaultRecipe() {
-  $(".recipe-box").click(function (e) {
-    let recipeIndex = e.currentTarget.id;
-    console.log("clicked default recipe " + recipeIndex);
-    $("#app").html(`<div class="recipe-full">
-    <div class="recipe-full-content">
-      <div class="recipe-full-basic">
-        <div class="recipe-full-img">
-          <h2 class="recipe-sideways-heading">${RECIPES[recipeIndex].recipeName}</h2>
-          <img src="images/${RECIPES[recipeIndex].recipeImage}" alt="" />
+function loadDefaultRecipeFull(index) {
+  console.log(
+    `clicked default recipe idx=${index}, running function loadDefaultRecipeFull`
+  );
+  $("#app").html(`<div class="recipe-full">
+      <div class="recipe-full-content">
+        <div class="recipe-full-basic">
+          <div class="recipe-full-img">
+            <h2 class="recipe-sideways-heading">${RECIPES[index].recipeName}</h2>
+            <img src="images/${RECIPES[index].recipeImage}" alt="" />
+          </div>
+          <div class="recipe-full-desc">
+            <h2>Description:</h2>
+            <p>
+            ${RECIPES[index].recipeDesc}
+            </p>
+            <h3>Total Time:</h3>
+            <p>${RECIPES[index].recipeTime}</p>
+            <h3>Servings:</h3>
+            <p>${RECIPES[index].recipeServings}</p>
+          </div>
         </div>
-        <div class="recipe-full-desc">
-          <h2>Description:</h2>
-          <p>
-          ${RECIPES[recipeIndex].recipeDesc}
-          </p>
-          <h3>Total Time:</h3>
-          <p>${RECIPES[recipeIndex].recipeTime}</p>
-          <h3>Servings:</h3>
-          <p>${RECIPES[recipeIndex].recipeServings}</p>
+        <div class="recipe-full-ingredients">
+          <h2>Ingredients:</h2>
+          <li>${RECIPES[index].recipeIngOne}</li>
+          <li>${RECIPES[index].recipeIngTwo}</li>
+          <li>${RECIPES[index].recipeIngThree}</li>
+          <li>${RECIPES[index].recipeIngFour}</li>
+          <li>${RECIPES[index].recipeIngFive}</li>
+          <li>${RECIPES[index].recipeIngSix}</li>
+          <li>${RECIPES[index].recipeIngSeven}</li>
+          <li>${RECIPES[index].recipeIngEight}</li>
         </div>
-      </div>
-      <div class="recipe-full-ingredients">
-        <h2>Ingredients:</h2>
-        <li>${RECIPES[recipeIndex].recipeIngOne}</li>
-        <li>${RECIPES[recipeIndex].recipeIngTwo}</li>
-        <li>${RECIPES[recipeIndex].recipeIngThree}</li>
-        <li>${RECIPES[recipeIndex].recipeIngFour}</li>
-        <li>${RECIPES[recipeIndex].recipeIngFive}</li>
-        <li>${RECIPES[recipeIndex].recipeIngSix}</li>
-        <li>${RECIPES[recipeIndex].recipeIngSeven}</li>
-        <li>${RECIPES[recipeIndex].recipeIngEight}</li>
-      </div>
-      <div class="recipe-full-inst">
-        <h2>Instructions:</h2>
-        <li>${RECIPES[recipeIndex].recipeInstOne}</li>
-        <li>${RECIPES[recipeIndex].recipeInstTwo}</li>
-        <li>${RECIPES[recipeIndex].recipeInstThree}</li>
-        <li>${RECIPES[recipeIndex].recipeInstFour}</li>
-        <li>${RECIPES[recipeIndex].recipeInstFive}</li>
-      </div>
-      <div class="recipe-full-btns">
-        <div id="recipe-full-back">Go Back</div>
+        <div class="recipe-full-inst">
+          <h2>Instructions:</h2>
+          <li>${RECIPES[index].recipeInstOne}</li>
+          <li>${RECIPES[index].recipeInstTwo}</li>
+          <li>${RECIPES[index].recipeInstThree}</li>
+          <li>${RECIPES[index].recipeInstFour}</li>
+          <li>${RECIPES[index].recipeInstFive}</li>
+        </div>
+        <div class="recipe-full-btns">
+          <div id="recipe-full-back">Go Back</div>
+        </div>
       </div>
     </div>
-  </div>
-  `);
-    $("html, body").animate({ scrollTop: 0 }, 0);
+    `);
+  // });
+  $("html, body").animate({ scrollTop: 0 }, 0);
 
-    returnToDefaultRecipes();
-  });
+  returnToDefaultRecipes();
+  // });
 }
 
 function loadDefaultRecipes() {
   $.each(RECIPES, function (index, recipe) {
     $(".recipes-container").append(`<div class="recipe-box" id="${index}">
     <div class="recipe-img">
+    <div class="recipe-buttons">
+        <div
+          id="recipe-btn-view"
+          onclick="loadDefaultRecipeFull(${index})"
+          class="recipe-btn"
+        >
+          View
+        </div>
+      </div>
       <img src="images/${recipe.recipeImage}" alt="" />
     </div>
     <div class="recipe-desc">
@@ -176,7 +205,8 @@ function loadDefaultRecipes() {
       ${recipe.recipeDesc}
       </h2>
       <div class="recipe-time-servings">
-        <div class="recipe-time-img"></div>
+        <div class="recipe-time-img">
+        </div>
         <p>${recipe.recipeTime}</p>
       </div>
       <div class="recipe-time-servings">
@@ -185,8 +215,6 @@ function loadDefaultRecipes() {
       </div>
     </div>
   </div>`);
-
-    loadFullDefaultRecipe();
   });
 }
 ///////////////////////////////////////////////////////////
@@ -199,12 +227,14 @@ function initFirebase() {
       console.log(">> auth change logged in");
       userExists = true;
       if (user.displayName) {
+        // $("#header-fName").html(`hey ${user.displayName}, create your recipe!`);
+        // $("#your-recipes-header").html(
+        //   `hey ${user.displayName}, here are your recipes!`
+        // );
         $("#navCreate").click(function () {
           console.log("clicked create logged in");
-
           setTimeout(function () {
             location.href = "#create";
-
             setTimeout(function () {
               $("#header-fName").html(
                 `hey ${user.displayName}, create your recipe!`
@@ -212,9 +242,8 @@ function initFirebase() {
             }, 50);
           }, 50);
         });
-
         $("#navYourRecipes").click(function () {
-          // console.log("clicked your-recipes");
+          // alert("clicked your-recipes");
           setTimeout(function () {
             $("#your-recipes-header").html(
               `hey ${user.displayName}, here are your recipes!`
@@ -436,13 +465,11 @@ function loadUserRecipeFull(index) {
   returnToUserRecipes();
 }
 
-function loadUserRecipesOLD() {
+function loadUserRecipes() {
   $.each(_userProfileInfo.recipes, function (index, recipe) {
-    $(
-      ".your-recipes-container"
-    ).append(`<div class="your-recipe-box" id="${index}">
-    <div class="your-recipe-img">
-      <div class="recipe-buttons">
+    $(".your-recipes-container").append(`<div class="recipe-box" id="${index}">
+    <div class="recipe-img">
+    <div class="recipe-buttons">
         <div
           id="recipe-btn-view"
           onclick="loadUserRecipeFull(${index})"
@@ -458,30 +485,6 @@ function loadUserRecipesOLD() {
         onclick="deleteUserRecipe()"
         class="recipe-btn">Delete</div>
       </div>
-      <img src="images/${recipe.recipeImage}.jpg" alt="" />
-    </div>
-    <div class="recipe-desc">
-      <h1>${recipe.recipeName}</h1>
-      <p>
-      ${recipe.recipeDesc}
-      </p>
-      <div class="recipe-time">
-        <div class="recipe-time-img"></div>
-        <p>${recipe.recipeTime}</p>
-      </div>
-      <div class="recipe-servings">
-        <div class="recipe-servings-img"></div>
-        <p>${recipe.recipeServings}</p>
-      </div>
-    </div>
-  </div>`);
-  });
-}
-
-function loadUserRecipes() {
-  $.each(_userProfileInfo.recipes, function (index, recipe) {
-    $(".your-recipes-container").append(`<div class="recipe-box" id="${index}">
-    <div class="recipe-img">
       <img src="images/${recipe.recipeImage}" alt="" />
     </div>
     <div class="recipe-desc">
@@ -490,7 +493,8 @@ function loadUserRecipes() {
       ${recipe.recipeDesc}
       </h2>
       <div class="recipe-time-servings">
-        <div class="recipe-time-img"></div>
+        <div class="recipe-time-img">
+        </div>
         <p>${recipe.recipeTime}</p>
       </div>
       <div class="recipe-time-servings">
@@ -619,7 +623,7 @@ function changeRoute() {
       loadUserRecipes();
     });
   } else {
-    $.get(`pages/login/login.html`, function (data) {
+    $.get(`pages/home/home.html`, function (data) {
       $("#app").html(data);
     });
   }
@@ -636,6 +640,7 @@ function navListeners() {
   $(".nav-bars").click(function (e) {
     $(".nav-bars").toggleClass("active");
     $(".nav-links").toggleClass("active");
+    $(".navHolder").toggleClass("active-nav");
   });
 
   $(".nav-links a").click(function (e) {

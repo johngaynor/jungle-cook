@@ -36,8 +36,7 @@
         height: 263px;
         width: 524px;
         display: flex;
-        margin-top: 50px;
-        cursor: pointer;
+        margin: 50px auto;
 
         .recipe-img {
           img {
@@ -45,6 +44,36 @@
             width: 300px;
             border-radius: 24px;
             object-fit: cover;
+          }
+
+          .recipe-buttons {
+            background-color: red;
+
+            .recipe-btn {
+              height: 42px;
+              width: 128px;
+              border-radius: 26px;
+              font-family: Caveat;
+              font-size: 20px;
+              background-color: $site-yellow;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              cursor: pointer;
+            }
+
+            #recipe-btn-view {
+              margin: 110px 86px;
+            }
+
+            #recipe-btn-edit {
+              margin: 278px 10px 0 15px;
+            }
+
+            #recipe-btn-delete {
+              margin: 278px 15px 0 158px;
+            }
           }
         }
 
@@ -75,6 +104,8 @@
             padding-left: 10px;
             width: 60px;
           }
+
+          // how to make text wrap if it's the same word? wraps if it's different words but a single one just carries on
 
           .recipe-time-servings {
             text-align: center;

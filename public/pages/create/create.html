@@ -1,5 +1,5 @@
 <div class="create">
-  <h1 id="header-fName"></h1>
+  <h1 id="header-fName">Hey (user), create your recipe!</h1>
   <div class="create-container">
     <form action="" class="create-form">
       <div class="create-basic">
@@ -22,13 +22,16 @@
         <input type="text" id="ingOne" placeholder="Ingredient #1" />
         <input type="text" id="ingTwo" placeholder="Ingredient #2" />
         <input type="text" id="ingThree" placeholder="Ingredient #3" />
+        <div class="ingredient-add" onclick="addIngredient()">+</div>
       </div>
       <p>Enter Instructions:</p>
       <div class="create-instructions">
         <input type="text" id="instOne" placeholder="Instruction #1" />
         <input type="text" id="instTwo" placeholder="Instruction #2" />
         <input type="text" id="instThree" placeholder="Instruction #3" />
+        <div class="instruction-add" onclick="addInstruction()">+</div>
       </div>
+
       <div id="create-submit" onclick="createRecipeSubmit()">Create Recipe</div>
     </form>
   </div>

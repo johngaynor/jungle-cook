@@ -28,8 +28,6 @@
       justify-content: space-between;
 
       .your-recipe-box {
-        // @include defaultRecipeBox();
-        // start manual code
         height: 263px;
         width: 524px;
         display: flex;
@@ -47,9 +45,17 @@
             background-color: red;
 
             .recipe-btn {
-              // @include defaultSmallBtn(none);
-              @include defaultSmallBtn();
-              display: none;
+              height: 42px;
+              width: 128px;
+              border-radius: 26px;
+              font-family: Caveat;
+              font-size: 20px;
+              background-color: $site-yellow;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              cursor: pointer;
             }
 
             #recipe-btn-view {

@@ -112,6 +112,11 @@ p {
   transition: all 0.3s ease-in-out;
 }
 
+.navHolder.active-nav {
+  background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
 .nav-bars.active .nav-bar:nth-child(2) {
   opacity: 0;
 }
@@ -141,7 +146,7 @@ p {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in-out;
     margin: 0 auto;
   }
   .navHolder .nav-links a {
@@ -288,8 +293,7 @@ p {
   height: 263px;
   width: 524px;
   display: flex;
-  margin-top: 50px;
-  cursor: pointer;
+  margin: 50px auto;
 }
 .recipes .recipes-content .recipes-container .recipe-box .recipe-img img,
 .recipes .recipes-content .your-recipes-container .recipe-box .recipe-img img,
@@ -303,6 +307,66 @@ p {
   width: 300px;
   border-radius: 24px;
   object-fit: cover;
+}
+.recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons,
+.recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons,
+.recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons,
+.recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons,
+.your-recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons,
+.your-recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons,
+.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons,
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons {
+  background-color: red;
+}
+.recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.your-recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.your-recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn,
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons .recipe-btn {
+  height: 42px;
+  width: 128px;
+  border-radius: 26px;
+  font-family: Caveat;
+  font-size: 20px;
+  background-color: #ffd972;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  cursor: pointer;
+}
+.recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.your-recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.your-recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view,
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-view {
+  margin: 110px 86px;
+}
+.recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.your-recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.your-recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit,
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-edit {
+  margin: 278px 10px 0 15px;
+}
+.recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.your-recipes .recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.your-recipes .recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.your-recipes .your-recipes-content .recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete,
+.your-recipes .your-recipes-content .your-recipes-container .recipe-box .recipe-img .recipe-buttons #recipe-btn-delete {
+  margin: 278px 15px 0 158px;
 }
 .recipes .recipes-content .recipes-container .recipe-box .recipe-desc,
 .recipes .recipes-content .your-recipes-container .recipe-box .recipe-desc,
@@ -776,6 +840,34 @@ input:-webkit-autofill {
 .edit .create-container div ::placeholder {
   color: #000;
 }
+.create .create-container .create-ingredients,
+.create .create-container .create-instructions,
+.edit .create-container .create-ingredients,
+.edit .create-container .create-instructions {
+  position: relative;
+}
+.create .create-container .create-ingredients .ingredient-add,
+.create .create-container .create-ingredients .instruction-add,
+.create .create-container .create-instructions .ingredient-add,
+.create .create-container .create-instructions .instruction-add,
+.edit .create-container .create-ingredients .ingredient-add,
+.edit .create-container .create-ingredients .instruction-add,
+.edit .create-container .create-instructions .ingredient-add,
+.edit .create-container .create-instructions .instruction-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 38px;
+  background-color: #f25c54;
+  border-radius: 50%;
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+}
 .create #create-submit,
 .create #edit-submit,
 .edit #create-submit,
@@ -878,11 +970,11 @@ input:-webkit-autofill {
   font-family: Caveat;
   font-size: 20px;
   background-color: #ffd972;
+  display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
   cursor: pointer;
-  display: none;
 }
 .your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons #recipe-btn-view {
   margin: 110px 86px;
