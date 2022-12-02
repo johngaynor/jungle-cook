@@ -204,46 +204,16 @@ function initFirebase() {
       _db = firebase.firestore();
       console.log(">> auth change logged in");
       userExists = true;
+
       if (user.displayName) {
-        // $("#header-fName").html(`hey ${user.displayName}, create your recipe!`);
-        // $("#your-recipes-header").html(
-        //   `hey ${user.displayName}, here are your recipes!`
-        // );
-        $("#navCreate").click(function () {
-          console.log("clicked create logged in");
-          setTimeout(function () {
-            location.href = "#create";
-            setTimeout(function () {
-              $("#header-fName").html(
-                `hey ${user.displayName}, create your recipe!`
-              );
-            }, 50);
-          }, 50);
-        });
-        $("#navYourRecipes").click(function () {
-          // alert("clicked your-recipes");
-          setTimeout(function () {
-            $("#your-recipes-header").html(
-              `hey ${user.displayName}, here are your recipes!`
-            );
-          }, 50);
-        });
+        userDisplayName = user.displayName;
       }
     } else {
       _db = "";
       _userProfileInfo = {};
       console.log(">> auth change logged out");
       userExists = false;
-      displayName = "";
-      $("#navCreate").click(function () {
-        console.log("clicked create logged out");
-
-        setTimeout(function () {
-          location.href = "#login";
-        }, 50);
-      });
-
-      // cannot figure out why this works when the user is logged in, but not after creating an account. For some reason it's running the "clicked create logged out" when the auth change says its logged in.
+      userDisplayName = "";
     }
   });
 }
@@ -277,7 +247,7 @@ function logIn() {
           console.log("user data retrieval error " + errorMessage);
         });
 
-      logInUpdatePage(user);
+      location.href = "#your-recipes";
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -305,7 +275,7 @@ function createAccount() {
     email: email,
     recipes: [],
   };
-  console.log("create " + fName + " " + lName);
+  console.log("create " + fullName);
 
   firebase
     .auth()
@@ -330,8 +300,7 @@ function createAccount() {
         .catch((error) => {
           var errorCode = error.code;
           var errorMessage = error.message;
-          console.log("create error " + errorMessage);
-          // ..
+          console.log("create error " + errorCode + " " + errorMessage);
         });
 
       userDisplayName = fName;
@@ -342,7 +311,7 @@ function createAccount() {
       $("#navLogin").hide();
       $("#navSignOut").show();
       $("#navYourRecipes").show();
-      logInUpdatePage(user);
+      location.href = "#your-recipes";
     })
 
     .catch((error) => {
@@ -351,10 +320,9 @@ function createAccount() {
       alert(
         "Sign up failed: email is invalid or an account already exists with this email."
       );
-      console.log("create error " + errorMessage);
+      console.log("create error " + errorCode + " " + errorMessage);
       $("#signup-password").val("");
       $("#login-password").val("");
-      // ..
     });
 }
 
@@ -368,13 +336,11 @@ function signOut() {
       $("#navLogin").show();
       $("#navYourRecipes").hide();
       $("#nav-fName").remove();
+      location.href = "#home";
     })
     .catch((error) => {
       console.log("Error signing out " + error);
     });
-  setTimeout(function () {
-    location.href = "#home";
-  }, 50);
 }
 ///////////////////////////////////////////////////////////
 
@@ -392,76 +358,119 @@ function returnToUserRecipes() {
 
 function editUserRecipe(index) {
   console.log("clicked edit user-recipe idx=" + index);
+
+  $("#app").html(`<div class="create">
+    <h1 id="header-fName">Hey ${userDisplayName}, edit your recipe!</h1>
+    <div class="create-container">
+      <form action="" class="create-form">
+        <div class="create-basic">
+          <input type="text" id="create-img" placeholder="Add Recipe Image" />
+          <input
+            type="file"
+            id="create-file"
+            accept="image/*"
+            placeholder="Add Recipe Image"
+          />
+          <label for="create-file">Attach File</label>
+          <input type="text" id="create-name" placeholder="Recipe Name" />
+          <input
+            type="text"
+            id="create-description"
+            placeholder="Recipe Description"
+          />
+          <input type="text" id="create-time" placeholder="Recipe Total Time" />
+          <input
+            type="text"
+            id="create-serving-size"
+            placeholder="Recipe Serving Size"
+          />
+        </div>
+        <p>Enter Ingredients:</p>
+        <div class="create-ingredients">
+          <input type="text" id="ing1" placeholder="Ingredient #1" />
+          <input type="text" id="ing2" placeholder="Ingredient #2" />
+          <input type="text" id="ing3" placeholder="Ingredient #3" />
+          <div class="ingredient-add" onclick="addIngredient()">+</div>
+        </div>
+        <p>Enter Instructions:</p>
+        <div class="create-instructions">
+          <input type="text" id="inst1" placeholder="Instruction #1" />
+          <input type="text" id="inst2" placeholder="Instruction #2" />
+          <input type="text" id="inst3" placeholder="Instruction #3" />
+          <div class="instruction-add" onclick="addInstruction()">+</div>
+        </div>
+  
+        <div id="create-submit" onclick="createRecipeSubmit()">Create Recipe</div>
+      </form>
+    </div>
+  </div>`);
+
+  $("html, body").animate({ scrollTop: 0 }, 0);
 }
 
 function loadUserRecipeFull(index) {
-  // $("#app").html(`<p>this is the index value: ${index}</p>`);
-  console.log(
-    `clicked recipe idx=${index}, running function loadUserRecipeFull`
-  );
   $("#app").html(`<div class="recipe-full">
-    <div class="recipe-full-content">
-      <div class="recipe-full-basic">
-        <div class="recipe-full-img">
-          <h2 class="recipe-sideways-heading">${_userProfileInfo.recipes[index].recipeName}</h2>
-          <img src="images/${_userProfileInfo.recipes[index].recipeImage}" alt="" />
-        </div>
-        <div class="recipe-full-desc">
-          <h2>Description:</h2>
-          <p>
-          ${_userProfileInfo.recipes[index].recipeDesc}
-          </p>
-          <h3>Total Time:</h3>
-          <p>${_userProfileInfo.recipes[index].recipeTime}</p>
-          <h3>Servings:</h3>
-          <p>${_userProfileInfo.recipes[index].recipeServings}</p>
-        </div>
+  <div class="recipe-full-content">
+    <div class="recipe-full-basic">
+      <div class="recipe-full-img">
+        <h2 class="recipe-sideways-heading">${_userProfileInfo.recipes[index].recipeName}</h2>
+        <img src="images/${_userProfileInfo.recipes[index].recipeImage}" alt="" />
       </div>
-      <div class="recipe-full-ingredients">
-        <h2>Ingredients:</h2>
-        <li>${_userProfileInfo.recipes[index].recipeIngOne}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngTwo}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngThree}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngFour}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngFive}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngSix}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngSeven}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngEight}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngNine}</li>
-        <li>${_userProfileInfo.recipes[index].recipeIngTen}</li>
-      </div>
-      <div class="recipe-full-inst">
-        <h2>Instructions:</h2>
-        <li>${_userProfileInfo.recipes[index].recipeInstOne}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstTwo}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstThree}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstFour}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstFive}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstSix}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstSeven}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstEight}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstNine}</li>
-        <li>${_userProfileInfo.recipes[index].recipeInstTen}</li>
-      </div>
-      </div>
-      <div class="recipe-full-btns">
-      <div class="recipe-full-btn" 
-      onclick="returnToUserRecipes()"  
-      id="your-recipe-full-back">Go Back</div>
-      <div
-        class="recipe-full-btn"
-        id="recipe-full-edit"
-        onclick="editUserRecipe(${index})"
-      >
-        Edit Recipe
+      <div class="recipe-full-desc">
+        <h2>Description:</h2>
+        <p>
+        ${_userProfileInfo.recipes[index].recipeDesc}
+        </p>
+        <h3>Total Time:</h3>
+        <p>${_userProfileInfo.recipes[index].recipeTime}</p>
+        <h3>Servings:</h3>
+        <p>${_userProfileInfo.recipes[index].recipeServings}</p>
       </div>
     </div>
+    <div class="recipe-full-ingredients">
+      <h2>Ingredients:</h2>
+      <li>${_userProfileInfo.recipes[index].recipeIngOne}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngTwo}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngThree}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngFour}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngFive}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngSix}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngSeven}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngEight}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngNine}</li>
+      <li>${_userProfileInfo.recipes[index].recipeIngTen}</li>
+    </div>
+    <div class="recipe-full-inst">
+      <h2>Instructions:</h2>
+      <li>${_userProfileInfo.recipes[index].recipeInstOne}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstTwo}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstThree}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstFour}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstFive}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstSix}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstSeven}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstEight}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstNine}</li>
+      <li>${_userProfileInfo.recipes[index].recipeInstTen}</li>
+    </div>
+    </div>
+    <div class="recipe-full-btns">
+    <div class="recipe-full-btn"
+    onclick="returnToUserRecipes()"
+    id="your-recipe-full-back">Go Back</div>
+    <div
+      class="recipe-full-btn"
+      id="recipe-full-edit"
+      onclick="editUserRecipe(${index})"
+    >
+      Edit Recipe
     </div>
   </div>
-  `);
+  </div>
+</div>
+`);
 
   $("html, body").animate({ scrollTop: 0 }, 0);
-  returnToUserRecipes();
 }
 
 function loadUserRecipes() {
@@ -723,15 +732,10 @@ function deleteUserRecipe(index) {
 }
 ///////////////////////////////////////////////////////////
 
-function logInUpdatePage(user) {
-  location.href = "#create";
-  console.log("update page works");
-  setTimeout(function () {
-    console.log("page loaded correctly");
-    $("#header-fName").html(`hey ${user.displayName}, create your recipe!`);
-  }, 50);
-  // 15ms is the lowest I could go for it to still work, should probably set it higher in case other computers don't load as fast
-}
+// function logInUpdatePage(user) {
+//   location.href = "#create";
+//   console.log("update page works");
+// }
 
 function updateUserInfo(userObj) {
   let id = firebase.auth().currentUser.uid;
@@ -754,7 +758,6 @@ function updateUserInfo(userObj) {
 function changeRoute() {
   let hashTag = window.location.hash;
   let pageID = hashTag.replace("#", "");
-  // let userDisplayName = displayName;
 
   if (pageID != "") {
     $.get(`pages/${pageID}/${pageID}.html`, function (data) {
@@ -766,6 +769,13 @@ function changeRoute() {
 
       if (pageID == `your-recipes`) {
         loadUserRecipes();
+        $("#your-recipes-header").html(
+          `hey ${userDisplayName}, here are your recipes!`
+        );
+      }
+
+      if (pageID == `create`) {
+        $("#header-fName").html(`hey ${userDisplayName}, create your recipe!`);
       }
     });
   } else {
@@ -793,6 +803,14 @@ function navListeners() {
     $(".nav-bars").removeClass("active");
     $(".nav-links").removeClass("active");
   });
+}
+
+function createRouting() {
+  if (userDisplayName == "") {
+    setTimeout(function () {
+      location.href = "#login";
+    }, 50);
+  }
 }
 ///////////////////////////////////////////////////////////
 
