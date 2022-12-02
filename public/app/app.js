@@ -93,26 +93,6 @@ var userExists = false;
 var userDisplayName = "";
 var _userProfileInfo = {};
 
-// adding additional instructions/ingredients /////////////
-let ingredientIndex = 3;
-let instructionIndex = 3;
-
-function addIngredient() {
-  $(".create-ingredients").append(
-    `<input type="text" placeholder="Ingredient #${ingredientIndex + 1}" />`
-  );
-
-  ingredientIndex++;
-}
-
-function addInstruction() {
-  $(".create-instructions").append(
-    `<input type="text" placeholder="Instruction #${instructionIndex + 1}" />`
-  );
-
-  instructionIndex++;
-}
-
 // this area is for browse.html functionality //////////////
 function returnToDefaultRecipes() {
   console.log("clicked go back");
@@ -172,16 +152,14 @@ function loadDefaultRecipeFull(index) {
           <li>${RECIPES[index].recipeInstFive}</li>
         </div>
         <div class="recipe-full-btns">
-          <div id="recipe-full-back">Go Back</div>
+          <div class="recipe-full-btn" id="recipe-full-back">Go Back</div>
         </div>
       </div>
     </div>
     `);
-  // });
   $("html, body").animate({ scrollTop: 0 }, 0);
 
   returnToDefaultRecipes();
-  // });
 }
 
 function loadDefaultRecipes() {
@@ -394,21 +372,26 @@ function signOut() {
     .catch((error) => {
       console.log("Error signing out " + error);
     });
+  setTimeout(function () {
+    location.href = "#home";
+  }, 50);
 }
 ///////////////////////////////////////////////////////////
 
 // this area is for user recipe functions /////////////////
 function returnToUserRecipes() {
-  $("#user-recipe-full-back").click(function () {
-    $("html, body").animate({ scrollTop: 0 }, 0);
-    $("#app").html(`<div class="your-recipes">
+  $("html, body").animate({ scrollTop: 0 }, 0);
+  $("#app").html(`<div class="your-recipes">
   <div class="your-recipes-content">
     <h1 id="your-recipes-header">Hey ${_userProfileInfo.firstName}, here are your recipes!</h1>
     <div class="your-recipes-container"></div>
   </div>
 </div>`);
-    loadUserRecipes();
-  });
+  loadUserRecipes();
+}
+
+function editUserRecipe(index) {
+  console.log("clicked edit user-recipe idx=" + index);
 }
 
 function loadUserRecipeFull(index) {
@@ -444,6 +427,8 @@ function loadUserRecipeFull(index) {
         <li>${_userProfileInfo.recipes[index].recipeIngSix}</li>
         <li>${_userProfileInfo.recipes[index].recipeIngSeven}</li>
         <li>${_userProfileInfo.recipes[index].recipeIngEight}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngNine}</li>
+        <li>${_userProfileInfo.recipes[index].recipeIngTen}</li>
       </div>
       <div class="recipe-full-inst">
         <h2>Instructions:</h2>
@@ -452,11 +437,25 @@ function loadUserRecipeFull(index) {
         <li>${_userProfileInfo.recipes[index].recipeInstThree}</li>
         <li>${_userProfileInfo.recipes[index].recipeInstFour}</li>
         <li>${_userProfileInfo.recipes[index].recipeInstFive}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstSix}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstSeven}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstEight}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstNine}</li>
+        <li>${_userProfileInfo.recipes[index].recipeInstTen}</li>
+      </div>
       </div>
       <div class="recipe-full-btns">
-        <div id="user-recipe-full-back">Go Back</div>
-        <div id="recipe-full-edit">Edit Recipe</div>
+      <div class="recipe-full-btn" 
+      onclick="returnToUserRecipes()"  
+      id="your-recipe-full-back">Go Back</div>
+      <div
+        class="recipe-full-btn"
+        id="recipe-full-edit"
+        onclick="editUserRecipe(${index})"
+      >
+        Edit Recipe
       </div>
+    </div>
     </div>
   </div>
   `);
@@ -477,9 +476,10 @@ function loadUserRecipes() {
         >
           View
         </div>
-        <div id="recipe-btn-edit"
-        onclick=""
-        class="recipe-btn">Edit Recipe</div>
+        <div 
+        class="recipe-btn" 
+        onclick="editUserRecipe(${index})"
+        id="recipe-btn-edit">Edit Recipe</div>
         <div
         id="recipe-btn-delete"
         onclick="deleteUserRecipe()"
@@ -508,25 +508,159 @@ function loadUserRecipes() {
 ///////////////////////////////////////////////////////////
 
 // this area is for creating/deleting user recipes ////////
+let ingredientIndex = 3;
+let instructionIndex = 3;
+
+function addIngredient() {
+  if (ingredientIndex < 10) {
+    $(".create-ingredients").append(
+      `<input type="text" id="ing${
+        ingredientIndex + 1
+      }" placeholder="Ingredient #${ingredientIndex + 1}" />`
+    );
+
+    ingredientIndex++;
+  } else {
+    $(".create-ingredients").append(
+      `<p class="create-add-error">Cannot add more than 10 ingredients!</p>`
+    );
+    $(".ingredient-add").remove();
+    console.log("hit ingredient limit");
+  }
+}
+
+function addInstruction() {
+  if (instructionIndex < 10) {
+    $(".create-instructions").append(
+      `<input type="text" id="inst${
+        instructionIndex + 1
+      }" placeholder="Instruction #${instructionIndex + 1}" />`
+    );
+
+    instructionIndex++;
+  } else {
+    $(".create-instructions").append(
+      `<p>Cannot add more than 10 instructions!</p>`
+    );
+    $(".instruction-add").remove();
+
+    console.log("hit instruction limit");
+  }
+}
+
 function createRecipeSubmit() {
   let newRecipeName = $("#create-name").val();
   let newRecipeDesc = $("#create-description").val();
   let newRecipeTime = $("#create-time").val();
   let newRecipeServings = $("#create-name").val();
   // let newRecipeImage =
-  let newRecipeIngOne = $("#ingOne").val();
-  let newRecipeIngTwo = $("#ingTwo").val();
-  let newRecipeIngThree = $("#ingThree").val();
-  let newRecipeIngFour = $("#ingFour").val();
-  let newRecipeIngFive = $("#ingFive").val();
-  let newRecipeIngSix = $("#ingSix").val();
-  let newRecipeIngSeven = $("#ingSeven").val();
-  let newRecipeIngEight = $("#ingEight").val();
-  let newRecipeInstOne = $("#instOne").val();
-  let newRecipeInstTwo = $("#instTwo").val();
-  let newRecipeInstThree = $("#instThree").val();
-  let newRecipeInstFour = $("#instFour").val();
-  let newRecipeInstFive = $("#instFive").val();
+  let newRecipeIngOne = $("#ing1").val();
+  let newRecipeIngTwo = $("#ing2").val();
+  let newRecipeIngThree = $("#ing3").val();
+  let newRecipeIngFour = $("#ing4").val();
+  let newRecipeIngFive = $("#ing5").val();
+  let newRecipeIngSix = $("#ing6").val();
+  let newRecipeIngSeven = $("#ing7").val();
+  let newRecipeIngEight = $("#ing8").val();
+  let newRecipeIngNine = $("#ing9").val();
+  let newRecipeIngTen = $("#ing10").val();
+  let newRecipeInstOne = $("#inst1").val();
+  let newRecipeInstTwo = $("#inst2").val();
+  let newRecipeInstThree = $("#inst3").val();
+  let newRecipeInstFour = $("#inst4").val();
+  let newRecipeInstFive = $("#inst5").val();
+  let newRecipeInstSix = $("#inst6").val();
+  let newRecipeInstSeven = $("#inst7").val();
+  let newRecipeInstEight = $("#inst8").val();
+  let newRecipeInstNine = $("#inst9").val();
+  let newRecipeInstTen = $("#inst10").val();
+
+  console.log("initial newRecipeInstFour = " + newRecipeInstFour);
+
+  if (newRecipeIngFour == undefined) {
+    newRecipeIngFour = "";
+  }
+
+  if (newRecipeIngFive == undefined) {
+    newRecipeIngFive = "";
+  }
+
+  if (newRecipeIngSix == undefined) {
+    newRecipeIngSix = "";
+  }
+
+  if (newRecipeIngSeven == undefined) {
+    newRecipeIngSeven = "";
+  }
+
+  if (newRecipeIngEight == undefined) {
+    newRecipeIngEight = "";
+  }
+
+  if (newRecipeIngNine == undefined) {
+    newRecipeIngNine = "";
+  }
+
+  if (newRecipeIngTen == undefined) {
+    newRecipeIngTen = "";
+  }
+
+  // begin instructions
+
+  if (newRecipeInstOne != "") {
+    newRecipeInstOne = "1. " + $("#inst1").val();
+  }
+
+  if (newRecipeInstTwo != "") {
+    newRecipeInstTwo = "2. " + $("#inst2").val();
+  }
+
+  if (newRecipeInstThree != "") {
+    newRecipeInstThree = "3. " + $("#inst3").val();
+  }
+
+  if (newRecipeInstFour == undefined) {
+    newRecipeInstFour = "";
+  } else {
+    newRecipeInstFour = "4. " + $("#inst4").val();
+    console.log("changed newRecipeInstFour = " + newRecipeInstFour);
+  }
+
+  if (newRecipeInstFive == undefined) {
+    newRecipeInstFive = "";
+  } else {
+    // newRecipeInsFive = "5. " + $("#inst5").val();
+  }
+
+  if (newRecipeInstSix == undefined) {
+    newRecipeInstSix = "";
+  } else {
+    // newRecipeInstSix = "6. " + $("#inst6").val();
+  }
+
+  if (newRecipeInstSeven == undefined) {
+    newRecipeInstSeven = "";
+  } else {
+    // newRecipeInstSeven = "7. " + $("#inst7").val();
+  }
+
+  if (newRecipeInstEight == undefined) {
+    newRecipeInstEight = "";
+  } else {
+    // newRecipeInstEight = "8. " + $("#inst8").val();
+  }
+
+  if (newRecipeInstNine == undefined) {
+    newRecipeInstNine = "";
+  } else {
+    // newRecipeInstNine = "9. " + $("#inst9").val();
+  }
+
+  if (newRecipeInstTen == undefined) {
+    newRecipeInstTen = "";
+  } else {
+    // newRecipeInstTen = "10. " + $("#inst10").val();
+  }
 
   let newRecipeObj = {
     recipeName: newRecipeName,
@@ -537,16 +671,23 @@ function createRecipeSubmit() {
     recipeIngOne: newRecipeIngOne,
     recipeIngTwo: newRecipeIngTwo,
     recipeIngThree: newRecipeIngThree,
-    recipeIngFour: "",
-    recipeIngFive: "",
-    recipeIngSix: "",
-    recipeIngSeven: "",
-    recipeIngEight: "",
+    recipeIngFour: newRecipeIngFour,
+    recipeIngFive: newRecipeIngFive,
+    recipeIngSix: newRecipeIngSix,
+    recipeIngSeven: newRecipeIngSeven,
+    recipeIngEight: newRecipeIngEight,
+    recipeIngNine: newRecipeIngNine,
+    recipeIngTen: newRecipeIngTen,
     recipeInstOne: newRecipeInstOne,
     recipeInstTwo: newRecipeInstTwo,
     recipeInstThree: newRecipeInstThree,
-    recipeInstFour: "",
-    recipeInstFive: "",
+    recipeInstFour: newRecipeInstFour,
+    recipeInstFive: newRecipeInstFive,
+    recipeInstSix: newRecipeInstSix,
+    recipeInstSeven: newRecipeInstSeven,
+    recipeInstEight: newRecipeInstEight,
+    recipeInstNine: newRecipeInstNine,
+    recipeInstTen: newRecipeInstTen,
   };
 
   // left off at 12:49 on the last video
@@ -619,11 +760,16 @@ function changeRoute() {
     $.get(`pages/${pageID}/${pageID}.html`, function (data) {
       $("#app").html(data);
 
-      loadDefaultRecipes();
-      loadUserRecipes();
+      if (pageID == `browse`) {
+        loadDefaultRecipes();
+      }
+
+      if (pageID == `your-recipes`) {
+        loadUserRecipes();
+      }
     });
   } else {
-    $.get(`pages/home/home.html`, function (data) {
+    $.get(`pages/create/create.html`, function (data) {
       $("#app").html(data);
     });
   }
@@ -654,7 +800,6 @@ $(document).ready(function () {
   try {
     let app = firebase.app();
     initFirebase();
-    // signInAnon();
   } catch (error) {
     console.log("firebase error ", error);
   }
@@ -662,35 +807,9 @@ $(document).ready(function () {
   navListeners();
 });
 
-// default recipe info
-// {
-//   recipeName: "",
-//   recipeDesc:
-//     "",
-//   recipeTime: "",
-//   recipeServings: "",
-//   recipeImage: "",
-//   recipeIngOne: "",
-//   recipeIngTwo: "",
-//   recipeIngThree: "",
-//   recipeIngFour: "",
-//   recipeIngFive: "",
-//   recipeIngSix: "",
-//   recipeIngSeven: "",
-//   recipeIngEight: "",
-//   recipeInstOne: "",
-//   recipeInstTwo: "",
-//   recipeInstThree: "",
-//   recipeInstFour: "",
-//   recipeInstFive: "",
-// },
-
 // RANDOM NOTES
 
 // individual error messages for specific errors (i.e. login error for invalid password vs too many failed attempts)
-
-// $("html, body").animate({ scrollTop: 0 }, 0);
-// this can be used to snap the scroll wheel up to the top of the page immediately, not sure if there's a faster way to do it without the animation
 
 // trying to figure out how to create an alert that does not require the user to dismiss it
 

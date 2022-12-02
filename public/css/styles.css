@@ -679,7 +679,7 @@ p {
   margin: 66px auto 35px 0;
 }
 .recipe-full .recipe-full-inst {
-  list-style: decimal;
+  list-style: none;
   font-size: 20px;
   font-family: Caveat;
   width: 100%;
@@ -691,9 +691,7 @@ p {
   margin-top: 60px;
   display: flex;
 }
-.recipe-full .recipe-full-btns #recipe-full-edit,
-.recipe-full .recipe-full-btns #recipe-full-back,
-.recipe-full .recipe-full-btns #your-recipe-full-back {
+.recipe-full .recipe-full-btns .recipe-full-btn {
   height: 42px;
   width: 128px;
   cursor: pointer;
@@ -845,6 +843,14 @@ input:-webkit-autofill {
 .edit .create-container .create-ingredients,
 .edit .create-container .create-instructions {
   position: relative;
+}
+.create .create-container .create-ingredients p,
+.create .create-container .create-instructions p,
+.edit .create-container .create-ingredients p,
+.edit .create-container .create-instructions p {
+  color: #f25c54;
+  font-family: Lato-Italic;
+  margin-top: 20px;
 }
 .create .create-container .create-ingredients .ingredient-add,
 .create .create-container .create-ingredients .instruction-add,

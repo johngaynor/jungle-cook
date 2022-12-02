@@ -45,6 +45,12 @@
     .create-instructions {
       position: relative;
 
+      p {
+        color: $site-red;
+        font-family: Lato-Italic;
+        margin-top: 20px;
+      }
+
       .ingredient-add,
       .instruction-add {
         display: flex;
