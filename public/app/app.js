@@ -805,7 +805,7 @@ function changeRoute() {
       }
     });
   } else {
-    $.get(`pages/create/create.html`, function (data) {
+    $.get(`pages/home/home.html`, function (data) {
       $("#app").html(data);
     });
   }
