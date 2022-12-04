@@ -18,19 +18,19 @@
 
   p {
     font-size: 20px;
-    background-color: blue;
+    // background-color: blue;
   }
 
   .recipe-full-basic {
     display: flex;
-    background-color: purple;
+    // background-color: purple;
 
     .recipe-full-img {
       position: relative;
-      background-color: aqua;
+      // background-color: aqua;
 
       .recipe-sideways-heading {
-        background-color: red;
+        // background-color: red;
         transform: rotate(270deg);
         position: absolute;
       }

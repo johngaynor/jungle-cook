@@ -637,18 +637,14 @@ p {
 }
 .recipe-full p {
   font-size: 20px;
-  background-color: blue;
 }
 .recipe-full .recipe-full-basic {
   display: flex;
-  background-color: purple;
 }
 .recipe-full .recipe-full-basic .recipe-full-img {
   position: relative;
-  background-color: aqua;
 }
 .recipe-full .recipe-full-basic .recipe-full-img .recipe-sideways-heading {
-  background-color: red;
   transform: rotate(270deg);
   position: absolute;
 }
