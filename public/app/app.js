@@ -204,6 +204,7 @@ function initFirebase() {
       _db = firebase.firestore();
       console.log(">> auth change logged in");
       userExists = true;
+      console.log("userExists = " + userExists);
 
       if (user.displayName) {
         userDisplayName = user.displayName;
@@ -214,6 +215,7 @@ function initFirebase() {
       console.log(">> auth change logged out");
       userExists = false;
       userDisplayName = "";
+      console.log("userExists = " + userExists);
     }
   });
 }
@@ -246,15 +248,16 @@ function logIn() {
 
           console.log("user data retrieval error " + errorMessage);
         });
-
+      console.log("changing from login to your-recipes");
       location.href = "#your-recipes";
+      setTimeout(function () {
+        // console.log("delayed user recipe loadin");
+        loadUserRecipes();
+      }, 500);
     })
     .catch((error) => {
       var errorCode = error.code;
       var errorMessage = error.message;
-      // $(".login-form").append(
-      //   `<p>Login failed: username and/or password is incorrect.</p>`
-      // );
       alert("Login failed: username and/or password is incorrect.");
       console.log("logged in error " + errorMessage);
       $("#login-password").val("");
@@ -311,7 +314,16 @@ function createAccount() {
       $("#navLogin").hide();
       $("#navSignOut").show();
       $("#navYourRecipes").show();
+      // console.log("changing from login to your-recipes");
+      // setTimeout(function () {
+      //   location.href = "#your-recipes";
+      // }, 1000);
       location.href = "#your-recipes";
+
+      // setTimeout(function () {
+      //   loadUserRecipes();
+      //   console.log("delayed loading");
+      // }, 50);
     })
 
     .catch((error) => {
@@ -325,6 +337,8 @@ function createAccount() {
       $("#login-password").val("");
     });
 }
+
+// still some things to fix with creating an account
 
 function signOut() {
   firebase
@@ -372,32 +386,44 @@ function editUserRecipe(index) {
             placeholder="Add Recipe Image"
           />
           <label for="create-file">Attach File</label>
-          <input type="text" id="create-name" placeholder="Recipe Name" />
+          <input type="text" id="create-name" placeholder="${_userProfileInfo.recipes[index].recipeName}" />
           <input
             type="text"
             id="create-description"
-            placeholder="Recipe Description"
+            placeholder="${_userProfileInfo.recipes[index].recipeDesc}"
           />
-          <input type="text" id="create-time" placeholder="Recipe Total Time" />
+          <input type="text" id="create-time" placeholder="${_userProfileInfo.recipes[index].recipeTime}" />
           <input
             type="text"
             id="create-serving-size"
-            placeholder="Recipe Serving Size"
+            placeholder="${_userProfileInfo.recipes[index].recipeServings}"
           />
         </div>
         <p>Enter Ingredients:</p>
         <div class="create-ingredients">
-          <input type="text" id="ing1" placeholder="Ingredient #1" />
-          <input type="text" id="ing2" placeholder="Ingredient #2" />
-          <input type="text" id="ing3" placeholder="Ingredient #3" />
-          <div class="ingredient-add" onclick="addIngredient()">+</div>
+          <input type="text" id="ing1" placeholder="${_userProfileInfo.recipes[index].recipeIngOne}" />
+          <input type="text" id="ing2" placeholder="${_userProfileInfo.recipes[index].recipeIngTwo}" />
+          <input type="text" id="ing3" placeholder="${_userProfileInfo.recipes[index].recipeIngThree}" />
+          <input type="text" id="ing4" placeholder="${_userProfileInfo.recipes[index].recipeIngFour}" />
+          <input type="text" id="ing5" placeholder="${_userProfileInfo.recipes[index].recipeIngFive}" />
+          <input type="text" id="ing6" placeholder="${_userProfileInfo.recipes[index].recipeIngSix}" />
+          <input type="text" id="ing7" placeholder="${_userProfileInfo.recipes[index].recipeIngSeven}" />
+          <input type="text" id="ing8" placeholder="${_userProfileInfo.recipes[index].recipeIngEight}" />
+          <input type="text" id="ing9" placeholder="${_userProfileInfo.recipes[index].recipeIngNine}" />
+          <input type="text" id="ing10" placeholder="${_userProfileInfo.recipes[index].recipeIngTen}" />
         </div>
         <p>Enter Instructions:</p>
         <div class="create-instructions">
-          <input type="text" id="inst1" placeholder="Instruction #1" />
-          <input type="text" id="inst2" placeholder="Instruction #2" />
-          <input type="text" id="inst3" placeholder="Instruction #3" />
-          <div class="instruction-add" onclick="addInstruction()">+</div>
+        <input type="text" id="inst1" placeholder="${_userProfileInfo.recipes[index].recipeInstOne}" />
+        <input type="text" id="inst2" placeholder="${_userProfileInfo.recipes[index].recipeInstTwo}" />
+        <input type="text" id="inst3" placeholder="${_userProfileInfo.recipes[index].recipeInstThree}" />
+        <input type="text" id="inst4" placeholder="${_userProfileInfo.recipes[index].recipeInstFour}" />
+        <input type="text" id="inst5" placeholder="${_userProfileInfo.recipes[index].recipeInstFive}" />
+        <input type="text" id="inst6" placeholder="${_userProfileInfo.recipes[index].recipeInstSix}" />
+        <input type="text" id="inst7" placeholder="${_userProfileInfo.recipes[index].recipeInstSeven}" />
+        <input type="text" id="inst8" placeholder="${_userProfileInfo.recipes[index].recipeInstEight}" />
+        <input type="text" id="inst9" placeholder="${_userProfileInfo.recipes[index].recipeInstNine}" />
+        <input type="text" id="inst10" placeholder="${_userProfileInfo.recipes[index].recipeInstTen}" />
         </div>
   
         <div id="create-submit" onclick="createRecipeSubmit()">Create Recipe</div>
@@ -806,7 +832,7 @@ function navListeners() {
 }
 
 function createRouting() {
-  if (userDisplayName == "") {
+  if (userExists == false) {
     setTimeout(function () {
       location.href = "#login";
     }, 50);

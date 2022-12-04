@@ -838,6 +838,29 @@ input:-webkit-autofill {
 .edit .create-container div ::placeholder {
   color: #000;
 }
+.create .create-container .create-basic,
+.edit .create-container .create-basic {
+  position: relative;
+}
+.create .create-container .create-basic #create-file,
+.edit .create-container .create-basic #create-file {
+  display: none;
+}
+.create .create-container .create-basic label,
+.edit .create-container .create-basic label {
+  height: 36px;
+  width: 110px;
+  border-radius: 26px;
+  position: absolute;
+  right: 0;
+  bottom: 488px;
+  font-family: Caveat;
+  font-size: 17px;
+  background-color: #efa7a7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .create .create-container .create-ingredients,
 .create .create-container .create-instructions,
 .edit .create-container .create-ingredients,

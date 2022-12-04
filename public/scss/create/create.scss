@@ -41,6 +41,27 @@
       }
     }
 
+    .create-basic {
+      position: relative;
+      #create-file {
+        display: none;
+      }
+      label {
+        height: 36px;
+        width: 110px;
+        border-radius: 26px;
+        position: absolute;
+        right: 0;
+        bottom: 488px;
+        font-family: Caveat;
+        font-size: 17px;
+        background-color: $site-darkpink;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
     .create-ingredients,
     .create-instructions {
       position: relative;
