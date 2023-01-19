@@ -199,6 +199,7 @@ function loadDefaultRecipes() {
 
 // this area is for firebase login/signup /////////////////
 function initFirebase() {
+  // alert("hello");
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       _db = firebase.firestore();
@@ -240,7 +241,6 @@ function logIn() {
         .get()
         .then((doc) => {
           _userProfileInfo = doc.data();
-          console.log("login userInfo ", _userProfileInfo);
         })
         .catch((error) => {
           var errorCode = error.code;
@@ -386,7 +386,8 @@ function editUserRecipe(index) {
             placeholder="Add Recipe Image"
           />
           <label for="create-file">Attach File</label>
-          <input type="text" id="create-name" placeholder="${_userProfileInfo.recipes[index].recipeName}" />
+          <input type="text" id="create-name" value="hello"
+          />
           <input
             type="text"
             id="create-description"
@@ -455,29 +456,10 @@ function loadUserRecipeFull(index) {
     </div>
     <div class="recipe-full-ingredients">
       <h2>Ingredients:</h2>
-      <li>${_userProfileInfo.recipes[index].recipeIngOne}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngTwo}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngThree}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngFour}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngFive}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngSix}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngSeven}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngEight}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngNine}</li>
-      <li>${_userProfileInfo.recipes[index].recipeIngTen}</li>
     </div>
-    <div class="recipe-full-inst">
+    <div class="recipe-full-instructions" style="margin-top: 50px">
       <h2>Instructions:</h2>
-      <li>${_userProfileInfo.recipes[index].recipeInstOne}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstTwo}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstThree}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstFour}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstFive}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstSix}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstSeven}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstEight}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstNine}</li>
-      <li>${_userProfileInfo.recipes[index].recipeInstTen}</li>
+
     </div>
     </div>
     <div class="recipe-full-btns">
@@ -495,6 +477,16 @@ function loadUserRecipeFull(index) {
   </div>
 </div>
 `);
+
+  _userProfileInfo.recipes[index].recipeIngredients.forEach((ing, index) => {
+    $(".recipe-full-ingredients").append(`
+    <li>${index + 1}. ${ing}</li>`);
+  });
+
+  _userProfileInfo.recipes[index].recipeInstructions.forEach((inst, index) => {
+    $(".recipe-full-instructions").append(`
+    <li>${index + 1}. ${inst}</li>`);
+  });
 
   $("html, body").animate({ scrollTop: 0 }, 0);
 }
@@ -517,7 +509,7 @@ function loadUserRecipes() {
         id="recipe-btn-edit">Edit Recipe</div>
         <div
         id="recipe-btn-delete"
-        onclick="deleteUserRecipe()"
+        onclick="deleteUserRecipe(${index})"
         class="recipe-btn">Delete</div>
       </div>
       <img src="images/${recipe.recipeImage}" alt="" />
@@ -547,40 +539,19 @@ let ingredientIndex = 3;
 let instructionIndex = 3;
 
 function addIngredient() {
-  if (ingredientIndex < 10) {
-    $(".create-ingredients").append(
-      `<input type="text" id="ing${
-        ingredientIndex + 1
-      }" placeholder="Ingredient #${ingredientIndex + 1}" />`
-    );
+  $(".create-ingredients").append(
+    `<input type="text" placeholder="Ingredient #${ingredientIndex + 1}" />`
+  );
 
-    ingredientIndex++;
-  } else {
-    $(".create-ingredients").append(
-      `<p class="create-add-error">Cannot add more than 10 ingredients!</p>`
-    );
-    $(".ingredient-add").remove();
-    console.log("hit ingredient limit");
-  }
+  ingredientIndex++;
 }
 
 function addInstruction() {
-  if (instructionIndex < 10) {
-    $(".create-instructions").append(
-      `<input type="text" id="inst${
-        instructionIndex + 1
-      }" placeholder="Instruction #${instructionIndex + 1}" />`
-    );
+  $(".create-instructions").append(
+    `<input type="text" placeholder="Instruction #${instructionIndex + 1}" />`
+  );
 
-    instructionIndex++;
-  } else {
-    $(".create-instructions").append(
-      `<p>Cannot add more than 10 instructions!</p>`
-    );
-    $(".instruction-add").remove();
-
-    console.log("hit instruction limit");
-  }
+  instructionIndex++;
 }
 
 function createRecipeSubmit() {
@@ -588,114 +559,31 @@ function createRecipeSubmit() {
   let newRecipeDesc = $("#create-description").val();
   let newRecipeTime = $("#create-time").val();
   let newRecipeServings = $("#create-name").val();
-  // let newRecipeImage =
-  let newRecipeIngOne = $("#ing1").val();
-  let newRecipeIngTwo = $("#ing2").val();
-  let newRecipeIngThree = $("#ing3").val();
-  let newRecipeIngFour = $("#ing4").val();
-  let newRecipeIngFive = $("#ing5").val();
-  let newRecipeIngSix = $("#ing6").val();
-  let newRecipeIngSeven = $("#ing7").val();
-  let newRecipeIngEight = $("#ing8").val();
-  let newRecipeIngNine = $("#ing9").val();
-  let newRecipeIngTen = $("#ing10").val();
-  let newRecipeInstOne = $("#inst1").val();
-  let newRecipeInstTwo = $("#inst2").val();
-  let newRecipeInstThree = $("#inst3").val();
-  let newRecipeInstFour = $("#inst4").val();
-  let newRecipeInstFive = $("#inst5").val();
-  let newRecipeInstSix = $("#inst6").val();
-  let newRecipeInstSeven = $("#inst7").val();
-  let newRecipeInstEight = $("#inst8").val();
-  let newRecipeInstNine = $("#inst9").val();
-  let newRecipeInstTen = $("#inst10").val();
+  let newRecipeIng = Array.from(
+    document.querySelectorAll(".create-ingredients input")
+  );
+  let newIngList = [];
+  newRecipeIng.forEach((ing, index) => {
+    if (ing.value != "") {
+      let eachIng = ing.value;
+      newIngList.push(eachIng);
+    } else {
+      console.log("ing " + index + " was empty");
+    }
+  });
 
-  console.log("initial newRecipeInstFour = " + newRecipeInstFour);
-
-  if (newRecipeIngFour == undefined) {
-    newRecipeIngFour = "";
-  }
-
-  if (newRecipeIngFive == undefined) {
-    newRecipeIngFive = "";
-  }
-
-  if (newRecipeIngSix == undefined) {
-    newRecipeIngSix = "";
-  }
-
-  if (newRecipeIngSeven == undefined) {
-    newRecipeIngSeven = "";
-  }
-
-  if (newRecipeIngEight == undefined) {
-    newRecipeIngEight = "";
-  }
-
-  if (newRecipeIngNine == undefined) {
-    newRecipeIngNine = "";
-  }
-
-  if (newRecipeIngTen == undefined) {
-    newRecipeIngTen = "";
-  }
-
-  // begin instructions
-
-  if (newRecipeInstOne != "") {
-    newRecipeInstOne = "1. " + $("#inst1").val();
-  }
-
-  if (newRecipeInstTwo != "") {
-    newRecipeInstTwo = "2. " + $("#inst2").val();
-  }
-
-  if (newRecipeInstThree != "") {
-    newRecipeInstThree = "3. " + $("#inst3").val();
-  }
-
-  if (newRecipeInstFour == undefined) {
-    newRecipeInstFour = "";
-  } else {
-    newRecipeInstFour = "4. " + $("#inst4").val();
-    console.log("changed newRecipeInstFour = " + newRecipeInstFour);
-  }
-
-  if (newRecipeInstFive == undefined) {
-    newRecipeInstFive = "";
-  } else {
-    // newRecipeInsFive = "5. " + $("#inst5").val();
-  }
-
-  if (newRecipeInstSix == undefined) {
-    newRecipeInstSix = "";
-  } else {
-    // newRecipeInstSix = "6. " + $("#inst6").val();
-  }
-
-  if (newRecipeInstSeven == undefined) {
-    newRecipeInstSeven = "";
-  } else {
-    // newRecipeInstSeven = "7. " + $("#inst7").val();
-  }
-
-  if (newRecipeInstEight == undefined) {
-    newRecipeInstEight = "";
-  } else {
-    // newRecipeInstEight = "8. " + $("#inst8").val();
-  }
-
-  if (newRecipeInstNine == undefined) {
-    newRecipeInstNine = "";
-  } else {
-    // newRecipeInstNine = "9. " + $("#inst9").val();
-  }
-
-  if (newRecipeInstTen == undefined) {
-    newRecipeInstTen = "";
-  } else {
-    // newRecipeInstTen = "10. " + $("#inst10").val();
-  }
+  let newRecipeInst = Array.from(
+    document.querySelectorAll(".create-instructions input")
+  );
+  let newInstList = [];
+  newRecipeInst.forEach((inst, index) => {
+    if (inst.value != "") {
+      let eachInst = inst.value;
+      newInstList.push(eachInst);
+    } else {
+      console.log("inst " + index + " was empty");
+    }
+  });
 
   let newRecipeObj = {
     recipeName: newRecipeName,
@@ -703,29 +591,9 @@ function createRecipeSubmit() {
     recipeTime: newRecipeTime,
     recipeServings: newRecipeServings,
     recipeImage: "",
-    recipeIngOne: newRecipeIngOne,
-    recipeIngTwo: newRecipeIngTwo,
-    recipeIngThree: newRecipeIngThree,
-    recipeIngFour: newRecipeIngFour,
-    recipeIngFive: newRecipeIngFive,
-    recipeIngSix: newRecipeIngSix,
-    recipeIngSeven: newRecipeIngSeven,
-    recipeIngEight: newRecipeIngEight,
-    recipeIngNine: newRecipeIngNine,
-    recipeIngTen: newRecipeIngTen,
-    recipeInstOne: newRecipeInstOne,
-    recipeInstTwo: newRecipeInstTwo,
-    recipeInstThree: newRecipeInstThree,
-    recipeInstFour: newRecipeInstFour,
-    recipeInstFive: newRecipeInstFive,
-    recipeInstSix: newRecipeInstSix,
-    recipeInstSeven: newRecipeInstSeven,
-    recipeInstEight: newRecipeInstEight,
-    recipeInstNine: newRecipeInstNine,
-    recipeInstTen: newRecipeInstTen,
+    recipeIngredients: newIngList,
+    recipeInstructions: newInstList,
   };
-
-  // left off at 12:49 on the last video
 
   console.log(newRecipeObj);
 
@@ -738,14 +606,11 @@ function createRecipeSubmit() {
   $("#create-description").val("");
   $("#create-time").val("");
   $("#create-serving-size").val("");
-  $("#ingOne").val("");
-  $("#ingTwo").val("");
-  $("#ingThree").val("");
-  $("#instOne").val("");
-  $("#instTwo").val("");
-  $("#instThree").val("");
-  $("html, body").animate({ scrollTop: 0 }, "slow");
+  $(".create-ingredients input").val("");
+  $(".create-instructions input").val("");
+
   alert("Your recipe has been submitted!");
+  $("html, body").animate({ scrollTop: 0 }, "slow");
 }
 
 function deleteUserRecipe(index) {
@@ -858,3 +723,29 @@ $(document).ready(function () {
 // trying to figure out how to create an alert that does not require the user to dismiss it
 
 // if the recipe name is too long w/o spaces it runs off the page, how to fix? text-overflow?
+
+{
+  /* <input type="text" id="ing1" placeholder="${_userProfileInfo.recipes[index].recipeIngOne}" />
+<input type="text" id="ing2" placeholder="${_userProfileInfo.recipes[index].recipeIngTwo}" />
+<input type="text" id="ing3" placeholder="${_userProfileInfo.recipes[index].recipeIngThree}" />
+<input type="text" id="ing4" placeholder="${_userProfileInfo.recipes[index].recipeIngFour}" />
+<input type="text" id="ing5" placeholder="${_userProfileInfo.recipes[index].recipeIngFive}" />
+<input type="text" id="ing6" placeholder="${_userProfileInfo.recipes[index].recipeIngSix}" />
+<input type="text" id="ing7" placeholder="${_userProfileInfo.recipes[index].recipeIngSeven}" />
+<input type="text" id="ing8" placeholder="${_userProfileInfo.recipes[index].recipeIngEight}" />
+<input type="text" id="ing9" placeholder="${_userProfileInfo.recipes[index].recipeIngNine}" />
+<input type="text" id="ing10" placeholder="${_userProfileInfo.recipes[index].recipeIngTen}" />
+</div>
+<p>Enter Instructions:</p>
+<div class="create-instructions">
+<input type="text" id="inst1" placeholder="${_userProfileInfo.recipes[index].recipeInstOne}" />
+<input type="text" id="inst2" placeholder="${_userProfileInfo.recipes[index].recipeInstTwo}" />
+<input type="text" id="inst3" placeholder="${_userProfileInfo.recipes[index].recipeInstThree}" />
+<input type="text" id="inst4" placeholder="${_userProfileInfo.recipes[index].recipeInstFour}" />
+<input type="text" id="inst5" placeholder="${_userProfileInfo.recipes[index].recipeInstFive}" />
+<input type="text" id="inst6" placeholder="${_userProfileInfo.recipes[index].recipeInstSix}" />
+<input type="text" id="inst7" placeholder="${_userProfileInfo.recipes[index].recipeInstSeven}" />
+<input type="text" id="inst8" placeholder="${_userProfileInfo.recipes[index].recipeInstEight}" />
+<input type="text" id="inst9" placeholder="${_userProfileInfo.recipes[index].recipeInstNine}" />
+<input type="text" id="inst10" placeholder="${_userProfileInfo.recipes[index].recipeInstTen}" /> */
+}
