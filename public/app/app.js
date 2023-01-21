@@ -378,12 +378,12 @@ function editUserRecipe(index) {
     <div class="create-container">
       <form action="" class="create-form">
         <div class="create-basic">
-          <input type="text" id="create-img" placeholder="Add Recipe Image" />
+          <input type="text" id="create-img" placeholder="Edit Recipe Image" />
           <input
             type="file"
             id="create-file"
             accept="image/*"
-            placeholder="Add Recipe Image"
+            placeholder="Edit Recipe Image"
           />
           <label for="create-file">Attach File</label>
           <input type="text" id="create-name" value="hello"
@@ -391,46 +391,41 @@ function editUserRecipe(index) {
           <input
             type="text"
             id="create-description"
-            placeholder="${_userProfileInfo.recipes[index].recipeDesc}"
+            value="${_userProfileInfo.recipes[index].recipeDesc}"
+            placeholder="Recipe Description"
           />
           <input type="text" id="create-time" placeholder="${_userProfileInfo.recipes[index].recipeTime}" />
           <input
             type="text"
             id="create-serving-size"
-            placeholder="${_userProfileInfo.recipes[index].recipeServings}"
+            value="${_userProfileInfo.recipes[index].recipeServings}"
+            placeholder="Recipe Serving Size"
+
           />
         </div>
-        <p>Enter Ingredients:</p>
+        <p>Edit Ingredients:</p>
         <div class="create-ingredients">
-          <input type="text" id="ing1" placeholder="${_userProfileInfo.recipes[index].recipeIngOne}" />
-          <input type="text" id="ing2" placeholder="${_userProfileInfo.recipes[index].recipeIngTwo}" />
-          <input type="text" id="ing3" placeholder="${_userProfileInfo.recipes[index].recipeIngThree}" />
-          <input type="text" id="ing4" placeholder="${_userProfileInfo.recipes[index].recipeIngFour}" />
-          <input type="text" id="ing5" placeholder="${_userProfileInfo.recipes[index].recipeIngFive}" />
-          <input type="text" id="ing6" placeholder="${_userProfileInfo.recipes[index].recipeIngSix}" />
-          <input type="text" id="ing7" placeholder="${_userProfileInfo.recipes[index].recipeIngSeven}" />
-          <input type="text" id="ing8" placeholder="${_userProfileInfo.recipes[index].recipeIngEight}" />
-          <input type="text" id="ing9" placeholder="${_userProfileInfo.recipes[index].recipeIngNine}" />
-          <input type="text" id="ing10" placeholder="${_userProfileInfo.recipes[index].recipeIngTen}" />
+            
         </div>
-        <p>Enter Instructions:</p>
+        <p>Edit Instructions:</p>
         <div class="create-instructions">
-        <input type="text" id="inst1" placeholder="${_userProfileInfo.recipes[index].recipeInstOne}" />
-        <input type="text" id="inst2" placeholder="${_userProfileInfo.recipes[index].recipeInstTwo}" />
-        <input type="text" id="inst3" placeholder="${_userProfileInfo.recipes[index].recipeInstThree}" />
-        <input type="text" id="inst4" placeholder="${_userProfileInfo.recipes[index].recipeInstFour}" />
-        <input type="text" id="inst5" placeholder="${_userProfileInfo.recipes[index].recipeInstFive}" />
-        <input type="text" id="inst6" placeholder="${_userProfileInfo.recipes[index].recipeInstSix}" />
-        <input type="text" id="inst7" placeholder="${_userProfileInfo.recipes[index].recipeInstSeven}" />
-        <input type="text" id="inst8" placeholder="${_userProfileInfo.recipes[index].recipeInstEight}" />
-        <input type="text" id="inst9" placeholder="${_userProfileInfo.recipes[index].recipeInstNine}" />
-        <input type="text" id="inst10" placeholder="${_userProfileInfo.recipes[index].recipeInstTen}" />
-        </div>
-  
+        
         <div id="create-submit" onclick="createRecipeSubmit()">Create Recipe</div>
       </form>
     </div>
   </div>`);
+
+  _userProfileInfo.recipes[index].recipeIngredients.forEach((ing, index) => {
+    $(".create-ingredients").append(`
+    <input type="text" value="${ing}" 
+    placeholder="Ingredient #${index + 1}"`);
+  });
+
+  _userProfileInfo.recipes[index].recipeInstructions.forEach((inst, index) => {
+    $(".create-instructions").append(`
+    <input type="text" value="${inst}" 
+    placeholder="Instruction #${index + 1}"`);
+  });
 
   $("html, body").animate({ scrollTop: 0 }, 0);
 }
