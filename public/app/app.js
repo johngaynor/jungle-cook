@@ -199,13 +199,23 @@ function loadDefaultRecipes() {
 
 // this area is for firebase login/signup /////////////////
 function initFirebase() {
-  // alert("hello");
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       _db = firebase.firestore();
       console.log(">> auth change logged in");
       userExists = true;
       console.log("userExists = " + userExists);
+
+      _db
+        .collection("Users")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          _userProfileInfo = doc.data();
+          console.log(_userProfileInfo);
+          loadUserRecipes();
+          // can't do this, it loads the recipes twice and that is not what we want. need this to only fire if the page is refreshed and we are on the page for user recipes
+        });
 
       if (user.displayName) {
         userDisplayName = user.displayName;
@@ -386,7 +396,7 @@ function editUserRecipe(index) {
             placeholder="Edit Recipe Image"
           />
           <label for="create-file">Attach File</label>
-          <input type="text" id="create-name" value="hello"
+          <input type="text" id="create-name" value="${_userProfileInfo.recipes[index].recipeName}"
           />
           <input
             type="text"
@@ -394,40 +404,115 @@ function editUserRecipe(index) {
             value="${_userProfileInfo.recipes[index].recipeDesc}"
             placeholder="Recipe Description"
           />
-          <input type="text" id="create-time" placeholder="${_userProfileInfo.recipes[index].recipeTime}" />
+          <input type="text" id="create-time" value="${_userProfileInfo.recipes[index].recipeTime}" placeholder="Recipe Time" />
           <input
             type="text"
             id="create-serving-size"
             value="${_userProfileInfo.recipes[index].recipeServings}"
             placeholder="Recipe Serving Size"
-
           />
         </div>
         <p>Edit Ingredients:</p>
         <div class="create-ingredients">
-            
+        <div class="ingredient-add" onclick={addEditIngredient(${index})}>+</div>
         </div>
         <p>Edit Instructions:</p>
         <div class="create-instructions">
-        
-        <div id="create-submit" onclick="createRecipeSubmit()">Create Recipe</div>
+        <div class="instruction-add" onclick={addEditInstruction(${index})}>+</div>
+        </div>
+       
+        <div id="create-submit" onclick="editRecipeSubmit(${index})">Create Recipe</div>
       </form>
     </div>
   </div>`);
 
   _userProfileInfo.recipes[index].recipeIngredients.forEach((ing, index) => {
-    $(".create-ingredients").append(`
-    <input type="text" value="${ing}" 
-    placeholder="Ingredient #${index + 1}"`);
+    $(".create-ingredients").append(
+      `
+      <input type="text" value="${ing}"
+      placeholder="Ingredient #${index + 1}" />`
+    );
   });
 
   _userProfileInfo.recipes[index].recipeInstructions.forEach((inst, index) => {
     $(".create-instructions").append(`
     <input type="text" value="${inst}" 
-    placeholder="Instruction #${index + 1}"`);
+    placeholder="Instruction #${index + 1}" />`);
   });
 
   $("html, body").animate({ scrollTop: 0 }, 0);
+}
+
+function addEditIngredient(index) {
+  $(".create-ingredients").append(
+    `<input type="text" placeholder="New Ingredient" />`
+  );
+}
+
+function addEditInstruction(index) {
+  $(".create-instructions").append(
+    `<input type="text" placeholder="New Instruction" />`
+  );
+}
+
+function editRecipeSubmit(index) {
+  let recipeName = $("#create-name").val();
+  let recipeDesc = $("#create-description").val();
+  let recipeTime = $("#create-time").val();
+  let recipeServings = $("#create-serving-size").val();
+  let recipeIng = Array.from(
+    document.querySelectorAll(".create-ingredients input")
+  );
+  let newIngList = [];
+  recipeIng.forEach((ing, index) => {
+    if (ing.value != "") {
+      let eachIng = ing.value;
+      newIngList.push(eachIng);
+    } else {
+      console.log("ing " + index + " was empty");
+    }
+  });
+
+  let recipeInst = Array.from(
+    document.querySelectorAll(".create-instructions input")
+  );
+  let newInstList = [];
+  recipeInst.forEach((inst, index) => {
+    if (inst.value != "") {
+      let eachInst = inst.value;
+      newInstList.push(eachInst);
+    } else {
+      console.log("inst " + index + " was empty");
+    }
+  });
+
+  let newRecipeObj = {
+    recipeName: recipeName,
+    recipeDesc: recipeDesc,
+    recipeTime: recipeTime,
+    recipeServings: recipeServings,
+    recipeImage: "",
+    recipeIngredients: newIngList,
+    recipeInstructions: newInstList,
+  };
+
+  console.log(newRecipeObj);
+  _userProfileInfo.recipes[index] = newRecipeObj;
+  console.log(_userProfileInfo.recipes[index]);
+  console.log(_userProfileInfo.recipes);
+  updateUserInfo(_userProfileInfo);
+
+  $("#create-img").val("");
+  $("#create-name").val(_userProfileInfo.recipes[index].recipeName);
+  $("#create-description").val(_userProfileInfo.recipes[index].recipeDesc);
+  $("#create-time").val(_userProfileInfo.recipes[index].recipeTime);
+  $("#create-serving-size").val(_userProfileInfo.recipes[index].recipeServings);
+  // $(".create-ingredients input").val("");
+  // $(".create-instructions input").val("");
+
+  alert("Your changes have been submitted!");
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+  // loadUserRecipes();
 }
 
 function loadUserRecipeFull(index) {
@@ -530,10 +615,8 @@ function loadUserRecipes() {
 ///////////////////////////////////////////////////////////
 
 // this area is for creating/deleting user recipes ////////
-let ingredientIndex = 3;
-let instructionIndex = 3;
-
 function addIngredient() {
+  let ingredientIndex = 3;
   $(".create-ingredients").append(
     `<input type="text" placeholder="Ingredient #${ingredientIndex + 1}" />`
   );
@@ -542,6 +625,7 @@ function addIngredient() {
 }
 
 function addInstruction() {
+  let instructionIndex = 3;
   $(".create-instructions").append(
     `<input type="text" placeholder="Instruction #${instructionIndex + 1}" />`
   );
