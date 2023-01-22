@@ -205,6 +205,9 @@ function initFirebase() {
       console.log(">> auth change logged in");
       userExists = true;
       console.log("userExists = " + userExists);
+      $("#navLogin").hide();
+      $("#navSignOut").show();
+      $("#navYourRecipes").show();
 
       _db
         .collection("Users")
@@ -219,6 +222,7 @@ function initFirebase() {
 
       if (user.displayName) {
         userDisplayName = user.displayName;
+        $("#header-fName").html(`hey ${userDisplayName}, create your recipe!`);
       }
     } else {
       _db = "";
@@ -242,9 +246,6 @@ function logIn() {
       // Signed in
       var user = userCredential.user;
       console.log("logged in");
-      $("#navLogin").hide();
-      $("#navSignOut").show();
-      $("#navYourRecipes").show();
       _db
         .collection("Users")
         .doc(user.uid)
@@ -258,12 +259,7 @@ function logIn() {
 
           console.log("user data retrieval error " + errorMessage);
         });
-      console.log("changing from login to your-recipes");
       location.href = "#your-recipes";
-      setTimeout(function () {
-        // console.log("delayed user recipe loadin");
-        loadUserRecipes();
-      }, 500);
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -324,16 +320,7 @@ function createAccount() {
       $("#navLogin").hide();
       $("#navSignOut").show();
       $("#navYourRecipes").show();
-      // console.log("changing from login to your-recipes");
-      // setTimeout(function () {
-      //   location.href = "#your-recipes";
-      // }, 1000);
       location.href = "#your-recipes";
-
-      // setTimeout(function () {
-      //   loadUserRecipes();
-      //   console.log("delayed loading");
-      // }, 50);
     })
 
     .catch((error) => {
@@ -347,8 +334,6 @@ function createAccount() {
       $("#login-password").val("");
     });
 }
-
-// still some things to fix with creating an account
 
 function signOut() {
   firebase
@@ -572,6 +557,10 @@ function loadUserRecipeFull(index) {
 }
 
 function loadUserRecipes() {
+  console.log(userDisplayName);
+  $("#your-recipes-header").html(
+    `hey ${userDisplayName}, here are your recipes!`
+  );
   $.each(_userProfileInfo.recipes, function (index, recipe) {
     $(".your-recipes-container").append(`<div class="recipe-box" id="${index}">
     <div class="recipe-img">
@@ -702,11 +691,6 @@ function deleteUserRecipe(index) {
 }
 ///////////////////////////////////////////////////////////
 
-// function logInUpdatePage(user) {
-//   location.href = "#create";
-//   console.log("update page works");
-// }
-
 function updateUserInfo(userObj) {
   let id = firebase.auth().currentUser.uid;
   // if theres a user logged in, it will get the uid
@@ -735,13 +719,6 @@ function changeRoute() {
 
       if (pageID == `browse`) {
         loadDefaultRecipes();
-      }
-
-      if (pageID == `your-recipes`) {
-        loadUserRecipes();
-        $("#your-recipes-header").html(
-          `hey ${userDisplayName}, here are your recipes!`
-        );
       }
 
       if (pageID == `create`) {
@@ -794,37 +771,3 @@ $(document).ready(function () {
   initURLListener();
   navListeners();
 });
-
-// RANDOM NOTES
-
-// individual error messages for specific errors (i.e. login error for invalid password vs too many failed attempts)
-
-// trying to figure out how to create an alert that does not require the user to dismiss it
-
-// if the recipe name is too long w/o spaces it runs off the page, how to fix? text-overflow?
-
-{
-  /* <input type="text" id="ing1" placeholder="${_userProfileInfo.recipes[index].recipeIngOne}" />
-<input type="text" id="ing2" placeholder="${_userProfileInfo.recipes[index].recipeIngTwo}" />
-<input type="text" id="ing3" placeholder="${_userProfileInfo.recipes[index].recipeIngThree}" />
-<input type="text" id="ing4" placeholder="${_userProfileInfo.recipes[index].recipeIngFour}" />
-<input type="text" id="ing5" placeholder="${_userProfileInfo.recipes[index].recipeIngFive}" />
-<input type="text" id="ing6" placeholder="${_userProfileInfo.recipes[index].recipeIngSix}" />
-<input type="text" id="ing7" placeholder="${_userProfileInfo.recipes[index].recipeIngSeven}" />
-<input type="text" id="ing8" placeholder="${_userProfileInfo.recipes[index].recipeIngEight}" />
-<input type="text" id="ing9" placeholder="${_userProfileInfo.recipes[index].recipeIngNine}" />
-<input type="text" id="ing10" placeholder="${_userProfileInfo.recipes[index].recipeIngTen}" />
-</div>
-<p>Enter Instructions:</p>
-<div class="create-instructions">
-<input type="text" id="inst1" placeholder="${_userProfileInfo.recipes[index].recipeInstOne}" />
-<input type="text" id="inst2" placeholder="${_userProfileInfo.recipes[index].recipeInstTwo}" />
-<input type="text" id="inst3" placeholder="${_userProfileInfo.recipes[index].recipeInstThree}" />
-<input type="text" id="inst4" placeholder="${_userProfileInfo.recipes[index].recipeInstFour}" />
-<input type="text" id="inst5" placeholder="${_userProfileInfo.recipes[index].recipeInstFive}" />
-<input type="text" id="inst6" placeholder="${_userProfileInfo.recipes[index].recipeInstSix}" />
-<input type="text" id="inst7" placeholder="${_userProfileInfo.recipes[index].recipeInstSeven}" />
-<input type="text" id="inst8" placeholder="${_userProfileInfo.recipes[index].recipeInstEight}" />
-<input type="text" id="inst9" placeholder="${_userProfileInfo.recipes[index].recipeInstNine}" />
-<input type="text" id="inst10" placeholder="${_userProfileInfo.recipes[index].recipeInstTen}" /> */
-}

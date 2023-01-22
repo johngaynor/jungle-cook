@@ -674,13 +674,13 @@ p {
 .recipe-full .recipe-full-ingredients h2 {
   margin: 66px auto 35px 0;
 }
-.recipe-full .recipe-full-inst {
+.recipe-full .recipe-full-instructions {
   list-style: none;
   font-size: 20px;
   font-family: Caveat;
   width: 100%;
 }
-.recipe-full .recipe-full-inst h2 {
+.recipe-full .recipe-full-instructions h2 {
   margin: 66px auto 35px 0;
 }
 .recipe-full .recipe-full-btns {
