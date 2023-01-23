@@ -92,6 +92,7 @@ var _db = "";
 var userExists = false;
 var userDisplayName = "";
 var _userProfileInfo = {};
+var userID = "";
 
 // this area is for browse.html functionality //////////////
 function returnToDefaultRecipes() {
@@ -217,7 +218,7 @@ function initFirebase() {
           _userProfileInfo = doc.data();
           console.log(_userProfileInfo);
           loadUserRecipes();
-          // can't do this, it loads the recipes twice and that is not what we want. need this to only fire if the page is refreshed and we are on the page for user recipes
+          userID = user.uid;
         });
 
       if (user.displayName) {
@@ -230,6 +231,8 @@ function initFirebase() {
       console.log(">> auth change logged out");
       userExists = false;
       userDisplayName = "";
+      userID = "";
+
       console.log("userExists = " + userExists);
     }
   });
@@ -557,10 +560,12 @@ function loadUserRecipeFull(index) {
 }
 
 function loadUserRecipes() {
-  console.log(userDisplayName);
   $("#your-recipes-header").html(
     `hey ${userDisplayName}, here are your recipes!`
   );
+
+  const storageListRef = firebase.storage().ref(userID + "/images");
+
   $.each(_userProfileInfo.recipes, function (index, recipe) {
     $(".your-recipes-container").append(`<div class="recipe-box" id="${index}">
     <div class="recipe-img">
@@ -581,7 +586,6 @@ function loadUserRecipes() {
         onclick="deleteUserRecipe(${index})"
         class="recipe-btn">Delete</div>
       </div>
-      <img src="images/${recipe.recipeImage}" alt="" />
     </div>
     <div class="recipe-desc">
       <h1>${recipe.recipeName}</h1>
@@ -599,6 +603,17 @@ function loadUserRecipes() {
       </div>
     </div>
   </div>`);
+
+    const storageRef = firebase.storage().ref(recipe.recipeImage);
+    storageRef.getDownloadURL().then((url) => {
+      console.log(index + ": " + url);
+      // if (url.includes(recipe.recipeImage)) {
+      //   console.log("right one");
+      //   $(".recipe-img").append(`<img src="${url}" alt="" />`);
+      // }
+      // $(".recipe-img").append(`<img src="${url}" alt="" />`);
+      // document.querySelectorAll(".recipe-buttons img").src = `${url}`;
+    });
   });
 }
 ///////////////////////////////////////////////////////////
@@ -624,19 +639,27 @@ function addInstruction() {
 
 function createRecipeSubmit() {
   let newRecipeName = $("#create-name").val();
+  let newRecipeImg = document.getElementById("create-file");
+  const selectedFile = newRecipeImg.files[0];
+  let imgName = selectedFile.name;
+
+  // let storageRef = firebase.storage().ref(userID).child(imgName);
+  //  + "/images/" + imgName);
+  let storageRef = firebase.storage().ref(imgName);
+  storageRef.put(selectedFile);
+
   let newRecipeDesc = $("#create-description").val();
   let newRecipeTime = $("#create-time").val();
-  let newRecipeServings = $("#create-name").val();
+  let newRecipeServings = $("#create-serving-size").val();
   let newRecipeIng = Array.from(
     document.querySelectorAll(".create-ingredients input")
   );
+
   let newIngList = [];
   newRecipeIng.forEach((ing, index) => {
     if (ing.value != "") {
       let eachIng = ing.value;
       newIngList.push(eachIng);
-    } else {
-      console.log("ing " + index + " was empty");
     }
   });
 
@@ -648,17 +671,15 @@ function createRecipeSubmit() {
     if (inst.value != "") {
       let eachInst = inst.value;
       newInstList.push(eachInst);
-    } else {
-      console.log("inst " + index + " was empty");
     }
   });
 
   let newRecipeObj = {
     recipeName: newRecipeName,
+    recipeImage: imgName,
     recipeDesc: newRecipeDesc,
     recipeTime: newRecipeTime,
     recipeServings: newRecipeServings,
-    recipeImage: "",
     recipeIngredients: newIngList,
     recipeInstructions: newInstList,
   };
@@ -682,9 +703,7 @@ function createRecipeSubmit() {
 }
 
 function deleteUserRecipe(index) {
-  console.log(_userProfileInfo.recipes);
   _userProfileInfo.recipes.splice(index, 1);
-  console.log(_userProfileInfo.recipes);
   updateUserInfo(_userProfileInfo);
   $(".your-recipes-container").html("");
   loadUserRecipes();
@@ -721,9 +740,13 @@ function changeRoute() {
         loadDefaultRecipes();
       }
 
-      if (pageID == `create`) {
-        $("#header-fName").html(`hey ${userDisplayName}, create your recipe!`);
+      if (pageID == `your-recipes`) {
+        loadUserRecipes();
       }
+
+      // if (pageID == `create`) {
+      //   $("#header-fName").html(`hey ${userDisplayName}, create your recipe!`);
+      // }
     });
   } else {
     $.get(`pages/home/home.html`, function (data) {

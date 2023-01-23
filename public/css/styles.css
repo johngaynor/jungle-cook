@@ -985,9 +985,6 @@ input:-webkit-autofill {
   border-radius: 24px;
   object-fit: cover;
 }
-.your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons {
-  background-color: red;
-}
 .your-recipes .your-recipes-content .your-recipes-container .your-recipe-box .your-recipe-img .recipe-buttons .recipe-btn {
   height: 42px;
   width: 128px;
